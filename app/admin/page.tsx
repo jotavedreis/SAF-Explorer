@@ -5,6 +5,8 @@ import { CreatePlantButton } from "./create-plant-button";
 import { LogoutButton } from "./logout-button";
 import { PlantRow } from "./plant-row";
 
+export const dynamic = "force-dynamic";
+
 type SpeciesRow = {
   id: number;
   nome_popular: string;
