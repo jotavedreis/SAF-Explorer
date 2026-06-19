@@ -1,65 +1,44 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="relative isolate flex min-h-screen items-center overflow-hidden bg-[#f5f0e7] px-4 py-12 text-[#18261f] sm:px-6 lg:px-8">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(120,174,76,0.2),_transparent_35%),radial-gradient(circle_at_80%_15%,_rgba(223,177,96,0.18),_transparent_28%),linear-gradient(180deg,_#f9f7f2_0%,_#f5f0e7_52%,_#edf1e8_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(24,38,31,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(24,38,31,0.04)_1px,transparent_1px)] bg-[size:56px_56px] opacity-25" />
+
+      <section className="mx-auto grid w-full max-w-5xl gap-10 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-lime-500 via-emerald-500 to-teal-700 text-lg font-black text-white shadow-lg shadow-emerald-900/20">
+          SAF
+        </div>
+
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#6f7f6b]">
+            Ferramenta digital para sistema agroflorestal
+          </p>
+          <h1 className="mx-auto mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-[#1d2d24] sm:text-6xl">
+            Consulte plantas, funções ecológicas e informações de fertilidade do solo.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#516156] sm:text-lg">
+            O site reúne espécies agroflorestais, relações entre plantas, nutrientes do solo,
+            disponibilidade por pH e diagnóstico visual de sintomas nutricionais.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <div className="mx-auto flex flex-wrap justify-center gap-3">
+          <Link
+            href="/especies"
+            className="rounded-full bg-[#27412f] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/10 transition hover:bg-[#1b2e22]"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Ver plantas
+          </Link>
+          <Link
+            href="/solo"
+            className="rounded-full border border-[#cfd8c7] bg-white/80 px-6 py-3 text-sm font-semibold text-[#27412f] transition hover:bg-[#f7faf3]"
           >
-            Documentation
-          </a>
+            Ver química do solo
+          </Link>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }

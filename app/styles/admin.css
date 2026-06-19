@@ -1,0 +1,168 @@
+@layer components {
+  .admin-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(12, 21, 15, 0.62);
+    backdrop-filter: blur(8px);
+  }
+
+  .admin-modal {
+    width: min(100%, 56rem);
+    max-height: min(90vh, 58rem);
+    overflow-y: auto;
+    border: 1px solid #d9e4ce;
+    border-radius: 30px;
+    background: #ffffff;
+    box-shadow: 0 30px 90px rgba(12, 21, 15, 0.35);
+  }
+
+  .admin-modal--danger {
+    width: min(100%, 48rem);
+    border-color: #e8c9c9;
+  }
+
+  .admin-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid #edf1e7;
+  }
+
+  .admin-modal-body {
+    padding: 1.25rem;
+  }
+
+  .admin-modal-close {
+    flex: 0 0 auto;
+    border-radius: 9999px;
+    border: 1px solid #d7dfcf;
+    background: #f7faf3;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #294032;
+    transition: background-color 150ms ease;
+  }
+
+  .admin-modal-close:hover {
+    background: #edf4e5;
+  }
+
+  .admin-modal-kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #738072;
+  }
+
+  .admin-modal-title {
+    margin-top: 0.35rem;
+    font-size: 1.55rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #1f3127;
+  }
+
+  .admin-modal-text {
+    margin-top: 0.35rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #657268;
+  }
+
+  .admin-summary {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .admin-summary-media {
+    display: flex;
+    min-height: 10rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px dashed #d8e0d1;
+    border-radius: 1.25rem;
+    background: #f8faf5;
+    color: #738076;
+    font-size: 0.875rem;
+  }
+
+  .admin-summary-media img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .admin-summary-category {
+    margin-top: 0.75rem;
+    display: inline-flex;
+    border-radius: 9999px;
+    background: #ecf3e2;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #607149;
+  }
+
+  .admin-danger-box {
+    margin-top: 1.25rem;
+    border-radius: 1rem;
+    background: #f6dddd;
+    padding: 1rem;
+    color: #733131;
+    font-size: 0.875rem;
+  }
+
+  .admin-danger-actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .admin-danger-button {
+    border-radius: 9999px;
+    background: var(--saf-danger);
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #ffffff;
+    transition: background-color 150ms ease;
+  }
+
+  .admin-danger-button:hover {
+    background: var(--saf-danger-hover);
+  }
+
+  .admin-secondary-button {
+    border-radius: 9999px;
+    border: 1px solid #d9c8c8;
+    background: #ffffff;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #5d3939;
+    transition: background-color 150ms ease;
+  }
+
+  .admin-secondary-button:hover {
+    background: #f8eeee;
+  }
+
+  @media (min-width: 768px) {
+    .admin-summary {
+      grid-template-columns: 180px 1fr;
+    }
+  }
+}

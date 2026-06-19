@@ -1,0 +1,27 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --saf-ink: #1b2b21;
+  --saf-muted: #657268;
+  --saf-panel: #ffffff;
+  --saf-page: #eef3e8;
+  --saf-border: #dae2d0;
+  --saf-primary: #27412f;
+  --saf-primary-hover: #1b2e22;
+  --saf-danger: #8a2d2d;
+  --saf-danger-hover: #6e2323;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #08110d;
+    --foreground: #f3f7f4;
+  }
+}

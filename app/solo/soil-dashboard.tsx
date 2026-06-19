@@ -1,0 +1,352 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+type NutrientRow = {
+  id: number;
+  simbolo: string;
+  nome: string;
+  funcao_na_planta: string | null;
+  sintomas_deficiencia: string | null;
+  fontes_naturais: string | null;
+};
+
+type PhPointRow = {
+  id: number;
+  ph_valor: number;
+  descricao_acidez: string | null;
+  atividade_biologica: string | null;
+  presenca_aluminio: string | null;
+};
+
+type PhAvailabilityRow = {
+  ph_ponto_id: number;
+  nutriente_id: number;
+  disponibilidade_pct: number;
+  descricao: string | null;
+};
+
+type VisualSymptomRow = {
+  id: number;
+  descricao: string;
+  nutriente_id: number;
+};
+
+type SoilDashboardProps = {
+  availability: PhAvailabilityRow[];
+  nutrients: NutrientRow[];
+  phPoints: PhPointRow[];
+  symptoms: VisualSymptomRow[];
+};
+
+export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: SoilDashboardProps) {
+  const minPh = phPoints[0]?.ph_valor ?? 4.5;
+  const maxPh = phPoints[phPoints.length - 1]?.ph_valor ?? 6;
+  const [selectedPh, setSelectedPh] = useState(minPh);
+  const [selectedSymptomId, setSelectedSymptomId] = useState(symptoms[0]?.id ? String(symptoms[0].id) : "");
+
+  const nutrientMap = useMemo(() => new Map(nutrients.map((nutrient) => [nutrient.id, nutrient])), [nutrients]);
+  const selectedSymptom = symptoms.find((symptom) => String(symptom.id) === selectedSymptomId) ?? null;
+  const likelyNutrient = selectedSymptom ? nutrientMap.get(selectedSymptom.nutriente_id) : null;
+  const currentPhContext = interpolatePhContext(phPoints, selectedPh);
+  const phMarkerPosition = getPhMarkerPosition(minPh, maxPh, selectedPh);
+
+  return (
+    <div className="mt-6 grid gap-6">
+      <section className="soil-hero-card p-5">
+        <div className="grid gap-5 lg:grid-cols-[1fr_320px] lg:items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">Painel visual</p>
+            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">Como o solo conversa com a planta</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-[#657268]">
+              Nutrientes, acidez e sintomas aparecem juntos para facilitar a leitura: primeiro voce entende o papel
+              de cada nutriente, depois compara a disponibilidade no pH escolhido.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2 rounded-3xl bg-white/70 p-3">
+            <VisualMetric label="Nutrientes" value={String(nutrients.length)} />
+            <VisualMetric label="Pontos pH" value={String(phPoints.length)} />
+            <VisualMetric label="Sintomas" value={String(symptoms.length)} />
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {nutrients.length === 0 ? (
+          <EmptyState text="Nenhum nutriente cadastrado ainda." />
+        ) : (
+          nutrients.map((nutrient) => (
+            <article key={nutrient.id} className="nutrient-card p-5">
+              <div className="relative">
+                <div className="flex items-start gap-4">
+                  <span className="nutrient-symbol">{nutrient.simbolo}</span>
+                  <div className="min-w-0 pt-1">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#738072]">Nutriente</p>
+                    <h2 className="text-2xl font-semibold text-[#1f3127]">{nutrient.nome}</h2>
+                    <p className="mt-1 text-sm text-[#657268]">Elemento essencial para acompanhar no manejo do solo.</p>
+                  </div>
+                </div>
+                <div className="mt-5 soil-chip-grid">
+                  <SoilTextBlock label="Funcao" value={nutrient.funcao_na_planta} />
+                  <SoilTextBlock label="Deficiencia" value={nutrient.sintomas_deficiencia} />
+                  <SoilTextBlock label="Fontes" value={nutrient.fontes_naturais} />
+                </div>
+              </div>
+            </article>
+          ))
+        )}
+      </section>
+
+      <section className="ph-stage p-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">pH e fertilidade</p>
+            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">Disponibilidade de nutrientes por pH</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-7 text-[#657268]">
+              A escala mostra a passagem de um solo mais acido para uma faixa mais favoravel. As barras abaixo mudam
+              conforme o pH selecionado.
+            </p>
+          </div>
+          <div className="rounded-3xl bg-[#27412f] px-5 py-3 text-center text-white shadow-lg shadow-emerald-950/15">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lime-100">pH atual</p>
+            <p className="text-3xl font-bold">{selectedPh.toFixed(2).replace(".", ",")}</p>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-3xl bg-white/75 p-4">
+          <div className="ph-gradient">
+            <span className="ph-marker" style={{ left: `${phMarkerPosition}%` }} />
+          </div>
+          <div className="mt-3 flex justify-between text-xs font-semibold uppercase tracking-[0.16em] text-[#657268]">
+            <span>Mais acido</span>
+            <span>Faixa favoravel</span>
+            <span>Menos acido</span>
+          </div>
+          <input
+            min={minPh}
+            max={maxPh}
+            step="0.05"
+            type="range"
+            value={selectedPh}
+            onChange={(event) => setSelectedPh(Number(event.target.value))}
+            className="mt-5 w-full accent-[#5d7b1f]"
+          />
+          <div className="mt-2 flex justify-between text-sm text-[#657268]">
+            <span>pH {minPh.toFixed(1).replace(".", ",")}</span>
+            <span>pH {maxPh.toFixed(1).replace(".", ",")}</span>
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-[320px_1fr]">
+          <div className="rounded-3xl bg-[#f8faf5] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">Condicao estimada</p>
+            <ConditionLine label="Acidez" value={currentPhContext.descricao_acidez} />
+            <ConditionLine label="Biologia" value={currentPhContext.atividade_biologica} />
+            <ConditionLine label="Aluminio" value={currentPhContext.presenca_aluminio} />
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            {nutrients.map((nutrient) => {
+              const percentage = interpolateAvailability(availability, phPoints, nutrient.id, selectedPh);
+              const level = getAvailabilityLevel(percentage);
+
+              return (
+                <div key={nutrient.id} className="availability-card">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758178]">
+                        {nutrient.simbolo}
+                      </p>
+                      <p className="font-semibold text-[#22342a]">{nutrient.nome}</p>
+                    </div>
+                    <span
+                      className="rounded-full px-3 py-1 text-xs font-bold"
+                      style={{ background: level.bg, color: level.fg }}
+                    >
+                      {level.label}
+                    </span>
+                  </div>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="availability-meter flex-1">
+                      <div
+                        className="availability-fill"
+                        style={{ width: `${percentage}%`, background: level.color }}
+                      />
+                    </div>
+                    <span className="w-10 text-right text-sm font-bold text-[#1f3127]">
+                      {Math.round(percentage)}%
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="diagnosis-card p-5">
+        <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">Diagnostico visual</p>
+            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">O sintoma aponta para qual nutriente?</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-[#657268]">
+              Escolha o que esta vendo na planta. O painel destaca a deficiencia nutricional mais provavel.
+            </p>
+          </div>
+
+          <label className="space-y-2 text-sm font-medium text-[#405046]">
+            <span>Sintoma observado</span>
+            <select
+              value={selectedSymptomId}
+              onChange={(event) => setSelectedSymptomId(event.target.value)}
+              className="w-full rounded-2xl border border-[#d4dcc8] bg-[#f9fbf6] px-4 py-3 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            >
+              {symptoms.length === 0 ? <option value="">Nenhum sintoma cadastrado</option> : null}
+              {symptoms.map((symptom) => (
+                <option key={symptom.id} value={symptom.id}>
+                  {symptom.descricao}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-[240px_1fr]">
+          <div className="diagnosis-result">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lime-100">Resultado</p>
+            <p className="mt-3 text-4xl font-black">{likelyNutrient?.simbolo ?? "--"}</p>
+            <p className="mt-2 text-lg font-semibold">{likelyNutrient ? likelyNutrient.nome : "Sem diagnostico"}</p>
+          </div>
+
+          <div className="rounded-3xl bg-[#f8faf5] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">Leitura sugerida</p>
+            <p className="mt-2 text-xl font-semibold text-[#1f3127]">
+              {selectedSymptom ? selectedSymptom.descricao : "Selecione um sintoma"}
+            </p>
+            <p className="mt-3 text-sm leading-7 text-[#536158]">
+              {likelyNutrient?.sintomas_deficiencia ||
+                "Quando houver dados completos no painel admin, este espaco mostra a explicacao do sintoma e a relacao com o nutriente."}
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function SoilTextBlock({ label, value }: { label: string; value: string | null }) {
+  return (
+    <div className="soil-chip">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">{label}</p>
+      <p className="mt-1 text-sm leading-6 text-[#22342a]">{value || "Ainda nao cadastrado."}</p>
+    </div>
+  );
+}
+
+function VisualMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl bg-[#f8faf5] px-3 py-4 text-center">
+      <p className="text-2xl font-bold text-[#1f3127]">{value}</p>
+      <p className="mt-1 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#738072]">{label}</p>
+    </div>
+  );
+}
+
+function ConditionLine({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="mt-4 border-t border-[#e1e8da] pt-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758178]">{label}</p>
+      <p className="mt-1 text-sm leading-6 text-[#22342a]">{value}</p>
+    </div>
+  );
+}
+
+function EmptyState({ text }: { text: string }) {
+  return (
+    <div className="col-span-full rounded-[28px] border border-dashed border-[#d5ddcd] bg-white/80 p-8 text-center">
+      <p className="text-sm font-medium text-[#526255]">{text}</p>
+    </div>
+  );
+}
+
+function getPhMarkerPosition(minPh: number, maxPh: number, selectedPh: number) {
+  if (minPh === maxPh) {
+    return 50;
+  }
+
+  return Math.min(100, Math.max(0, ((selectedPh - minPh) / (maxPh - minPh)) * 100));
+}
+
+function getAvailabilityLevel(percentage: number) {
+  if (percentage >= 75) {
+    return {
+      bg: "#e4f2d4",
+      color: "#5d7b1f",
+      fg: "#3f5f18",
+      label: "Alta",
+    };
+  }
+
+  if (percentage >= 45) {
+    return {
+      bg: "#fff0cf",
+      color: "#d89b3a",
+      fg: "#7a5416",
+      label: "Media",
+    };
+  }
+
+  return {
+    bg: "#f6dddd",
+    color: "#c75846",
+    fg: "#7a2a2a",
+    label: "Baixa",
+  };
+}
+
+function interpolateAvailability(
+  availability: PhAvailabilityRow[],
+  phPoints: PhPointRow[],
+  nutrientId: number,
+  selectedPh: number
+) {
+  const points = phPoints
+    .map((point) => ({
+      ph: point.ph_valor,
+      value:
+        availability.find((item) => item.ph_ponto_id === point.id && item.nutriente_id === nutrientId)
+          ?.disponibilidade_pct ?? 0,
+    }))
+    .sort((a, b) => a.ph - b.ph);
+
+  if (points.length === 0) {
+    return 0;
+  }
+
+  const lower = [...points].reverse().find((point) => point.ph <= selectedPh) ?? points[0];
+  const upper = points.find((point) => point.ph >= selectedPh) ?? points[points.length - 1];
+
+  if (lower.ph === upper.ph) {
+    return lower.value;
+  }
+
+  const ratio = (selectedPh - lower.ph) / (upper.ph - lower.ph);
+  return lower.value + (upper.value - lower.value) * ratio;
+}
+
+function interpolatePhContext(phPoints: PhPointRow[], selectedPh: number) {
+  const closestPoint =
+    phPoints.reduce<PhPointRow | null>((closest, point) => {
+      if (!closest) {
+        return point;
+      }
+
+      return Math.abs(point.ph_valor - selectedPh) < Math.abs(closest.ph_valor - selectedPh) ? point : closest;
+    }, null) ?? null;
+
+  return {
+    descricao_acidez: closestPoint?.descricao_acidez ?? "Sem descricao de acidez cadastrada.",
+    atividade_biologica: closestPoint?.atividade_biologica ?? "Sem descricao de atividade biologica cadastrada.",
+    presenca_aluminio: closestPoint?.presenca_aluminio ?? "Sem informacao de aluminio cadastrada.",
+  };
+}
