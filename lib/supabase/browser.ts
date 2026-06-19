@@ -5,8 +5,15 @@ function getPublicEnv(name: string) {
 }
 
 export function createClient() {
+  const supabaseUrl = getPublicEnv("NEXT_PUBLIC_SUPABASE_URL");
+  const supabaseAnonKey = getPublicEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("As variaveis publicas do Supabase nao foram configuradas.");
+  }
+
   return createBrowserClient(
-    getPublicEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    getPublicEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+    supabaseUrl,
+    supabaseAnonKey
   )
 }

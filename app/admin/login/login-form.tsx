@@ -6,7 +6,6 @@ import { createClient } from "@/lib/supabase/browser";
 
 export function LoginForm() {
   const router = useRouter();
-  const supabase = createClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,6 +15,16 @@ export function LoginForm() {
     event.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
+
+    let supabase: ReturnType<typeof createClient>;
+
+    try {
+      supabase = createClient();
+    } catch {
+      setIsLoading(false);
+      setErrorMessage("Supabase nao esta configurado no ambiente de deploy.");
+      return;
+    }
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
