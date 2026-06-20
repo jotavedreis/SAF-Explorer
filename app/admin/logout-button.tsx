@@ -17,7 +17,7 @@ export function LogoutButton() {
     <button
       type="button"
       onClick={handleLogout}
-      className="rounded-full bg-[#1f3327] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#15261d]"
+      className="w-full cursor-pointer rounded-full bg-[#1f3327] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#15261d] sm:w-auto"
     >
       Sair
     </button>

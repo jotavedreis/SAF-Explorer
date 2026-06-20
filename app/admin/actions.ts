@@ -25,8 +25,8 @@ const simpleNameSchema = z.object({
 });
 
 const relationTypeSchema = z.object({
-  nome: z.string().trim().min(2, "Informe o nome da relacao."),
-  nomeReverso: z.string().trim().min(2, "Informe o nome reverso da relacao."),
+  nome: z.string().trim().min(2, "Informe o nome da relação."),
+  nomeReverso: z.string().trim().min(2, "Informe o nome reverso da relação."),
   simetrica: z.coerce.boolean().default(false),
 });
 
@@ -40,7 +40,7 @@ const speciesRelationSchema = z.object({
   toSpeciesId: bigIntIdSchema,
   tipoRelacaoId: bigIntIdSchema,
 }).refine((data) => data.fromSpeciesId !== data.toSpeciesId, {
-  message: "Escolha duas especies diferentes.",
+  message: "Escolha duas espécies diferentes.",
 });
 
 const nutrientSchema = z.object({
@@ -130,7 +130,7 @@ export async function updateSpeciesAction(
   if (!speciesId.success) {
     return {
       status: "error",
-      message: "Nao foi possivel identificar a especie para edicao.",
+      message: "Não foi possível identificar a espécie para edição.",
       fields,
     };
   }
@@ -411,7 +411,7 @@ async function resolveSpeciesPhotoUrl(supabase: ReturnType<typeof createAdminCli
 
   if (error) {
     return new Error(
-      "Nao foi possivel enviar a foto. Verifique se o bucket 'species-photos' existe e esta publico."
+      "Não foi possível enviar a foto. Verifique se o bucket 'species-photos' existe e está público."
     );
   }
 

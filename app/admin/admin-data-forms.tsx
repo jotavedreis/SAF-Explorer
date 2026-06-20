@@ -74,24 +74,24 @@ export function AdminDataForms({
 }: AdminDataFormsProps) {
   const modules = [
     { label: "Categorias", value: categories.length },
-    { label: "Funcoes", value: functions.length },
-    { label: "Relacoes", value: relationTypes.length },
+    { label: "Funções", value: functions.length },
+    { label: "Relações", value: relationTypes.length },
     { label: "Nutrientes", value: nutrients.length },
     { label: "Pontos pH", value: phPoints.length },
     { label: "Sintomas", value: symptoms.length },
   ];
 
   return (
-    <section className="rounded-[30px] border border-[#dae2d0] bg-white p-5 shadow-sm">
+    <section className="rounded-[24px] border border-[#dae2d0] bg-white p-4 shadow-sm sm:rounded-[30px] sm:p-5">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#738072]">Dados do sistema</p>
           <h2 className="mt-1 text-xl font-semibold text-[#1f3127]">Cadastros complementares</h2>
           <p className="mt-1 text-sm text-[#657268]">
-            Preencha as informacoes que alimentam filtros, relacoes, quimica do solo, pH e diagnostico visual.
+            Preencha as informações que alimentam filtros, relações, química do solo, pH e diagnóstico visual.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:min-w-[420px]">
+        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 lg:min-w-[420px] lg:w-auto">
           {modules.map((module) => (
             <div key={module.label} className="rounded-2xl bg-[#f8faf5] px-3 py-2 text-center">
               <p className="text-lg font-bold text-[#1f3127]">{module.value}</p>
@@ -104,7 +104,7 @@ export function AdminDataForms({
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
         <AdminDetails
           accent="01"
-          title="Categorias e funcoes"
+          title="Categorias e funções"
           description="Listas usadas no cadastro das plantas e nos filtros publicos."
         >
           <div className="grid gap-4 xl:grid-cols-2">
@@ -118,60 +118,60 @@ export function AdminDataForms({
               />
             </div>
             <div>
-              <SimpleNameForm action={createFunctionAction} label="Nova funcao" name="nome" placeholder="Ex.: Fixacao de nitrogenio" />
+              <SimpleNameForm action={createFunctionAction} label="Nova função" name="nome" placeholder="Ex.: Fixação de nitrogênio" />
               <ManageableList
                 deleteAction={deleteFunctionAction}
-                emptyText="Nenhuma funcao cadastrada."
+                emptyText="Nenhuma função cadastrada."
                 items={functions.map((item) => ({ id: item.id, label: item.nome }))}
-                title="Funcoes cadastradas"
+                title="Funções cadastradas"
               />
             </div>
           </div>
         </AdminDetails>
 
-        <AdminDetails accent="02" title="Tipos de relacao" description="Textos direto e reverso para conectar especies.">
+        <AdminDetails accent="02" title="Tipos de relação" description="Textos direto e reverso para conectar espécies.">
           <form action={createRelationTypeAction} className="grid gap-3">
-            <AdminInput label="Nome da relacao" name="nome" placeholder="Fornece nitrogenio para" required />
-            <AdminInput label="Nome reverso" name="nomeReverso" placeholder="Recebe nitrogenio de" required />
+            <AdminInput label="Nome da relação" name="nome" placeholder="Fornece nitrogênio para" required />
+            <AdminInput label="Nome reverso" name="nomeReverso" placeholder="Recebe nitrogênio de" required />
             <label className="flex items-center gap-2 text-sm text-[#405046]">
               <input name="simetrica" type="checkbox" className="accent-[#27412f]" />
-              Relacao simetrica
+              Relação simétrica
             </label>
-            <SubmitButton label="Salvar tipo de relacao" />
+            <SubmitButton label="Salvar tipo de relação" />
           </form>
           <ManageableList
             deleteAction={deleteRelationTypeAction}
-            emptyText="Nenhum tipo de relacao cadastrado."
+            emptyText="Nenhum tipo de relação cadastrado."
             items={relationTypes.map((item) => ({ id: item.id, label: `${item.nome} / ${item.nome_reverso}` }))}
             title="Tipos cadastrados"
           />
         </AdminDetails>
 
-        <AdminDetails accent="03" title="Funcoes das especies" description="Associe uma planta a uma funcao.">
+        <AdminDetails accent="03" title="Funções das espécies" description="Associe uma planta a uma função.">
           <form action={createSpeciesFunctionAction} className="grid gap-3">
-            <AdminSelect label="Especie" name="speciesId" options={species.map(toOption)} />
-            <AdminSelect label="Funcao" name="funcaoId" options={functions.map(toOption)} />
-            <SubmitButton label="Vincular funcao" />
+            <AdminSelect label="Espécie" name="speciesId" options={species.map(toOption)} />
+            <AdminSelect label="Função" name="funcaoId" options={functions.map(toOption)} />
+            <SubmitButton label="Vincular função" />
           </form>
         </AdminDetails>
 
-        <AdminDetails accent="04" title="Relacoes entre especies" description="Ex.: Gliricidia fornece nitrogenio para Acai.">
+        <AdminDetails accent="04" title="Relações entre espécies" description="Ex.: Gliricídia fornece nitrogênio para Açaí.">
           <form action={createSpeciesRelationAction} className="grid gap-3">
-            <AdminSelect label="Especie origem" name="fromSpeciesId" options={species.map(toOption)} />
-            <AdminSelect label="Tipo de relacao" name="tipoRelacaoId" options={relationTypes.map(toOption)} />
-            <AdminSelect label="Especie destino" name="toSpeciesId" options={species.map(toOption)} />
-            <SubmitButton label="Criar relacao" />
+            <AdminSelect label="Espécie origem" name="fromSpeciesId" options={species.map(toOption)} />
+            <AdminSelect label="Tipo de relação" name="tipoRelacaoId" options={relationTypes.map(toOption)} />
+            <AdminSelect label="Espécie destino" name="toSpeciesId" options={species.map(toOption)} />
+            <SubmitButton label="Criar relação" />
           </form>
         </AdminDetails>
 
-        <AdminDetails accent="05" title="Nutrientes" description="Dados exibidos no modulo Quimica do Solo.">
+        <AdminDetails accent="05" title="Nutrientes" description="Dados exibidos no módulo Química do Solo.">
           <form action={createNutrientAction} className="grid gap-3">
             <div className="grid gap-3 sm:grid-cols-[120px_1fr]">
               <AdminInput label="Simbolo" name="simbolo" placeholder="N" required />
-              <AdminInput label="Nome" name="nome" placeholder="Nitrogenio" required />
+              <AdminInput label="Nome" name="nome" placeholder="Nitrogênio" required />
             </div>
-            <AdminTextarea label="Funcao na planta" name="funcaoNaPlanta" />
-            <AdminTextarea label="Sintomas de deficiencia" name="sintomasDeficiencia" />
+            <AdminTextarea label="Função na planta" name="funcaoNaPlanta" />
+            <AdminTextarea label="Sintomas de deficiência" name="sintomasDeficiencia" />
             <AdminTextarea label="Fontes naturais" name="fontesNaturais" />
             <SubmitButton label="Salvar nutriente" />
           </form>
@@ -186,9 +186,9 @@ export function AdminDataForms({
         <AdminDetails accent="06" title="Pontos de pH" description="Referencias para a barra interativa de fertilidade.">
           <form action={createPhPointAction} className="grid gap-3">
             <AdminInput label="Valor de pH" name="phValor" placeholder="6.0" required type="number" step="0.05" />
-            <AdminTextarea label="Descricao da acidez" name="descricaoAcidez" />
-            <AdminTextarea label="Atividade biologica" name="atividadeBiologica" />
-            <AdminTextarea label="Presenca de aluminio" name="presencaAluminio" />
+            <AdminTextarea label="Descrição da acidez" name="descricaoAcidez" />
+            <AdminTextarea label="Atividade biológica" name="atividadeBiologica" />
+            <AdminTextarea label="Presença de alumínio" name="presencaAluminio" />
             <SubmitButton label="Salvar ponto de pH" />
           </form>
           <ManageableList
@@ -214,12 +214,12 @@ export function AdminDataForms({
             />
             <AdminSelect label="Nutriente" name="nutrienteId" options={nutrients.map(toOption)} />
             <AdminInput label="Disponibilidade (%)" name="disponibilidadePct" placeholder="85" required type="number" />
-            <AdminTextarea label="Descricao qualitativa" name="descricao" />
+            <AdminTextarea label="Descrição qualitativa" name="descricao" />
             <SubmitButton label="Salvar disponibilidade" />
           </form>
         </AdminDetails>
 
-        <AdminDetails accent="08" title="Diagnostico visual" description="Sintomas observados e nutriente mais provavel.">
+        <AdminDetails accent="08" title="Diagnóstico visual" description="Sintomas observados e nutriente mais provável.">
           <form action={createVisualSymptomAction} className="grid gap-3">
             <AdminInput label="Sintoma" name="descricao" placeholder="Folhas amareladas" required />
             <AdminSelect label="Nutriente associado" name="nutrienteId" options={nutrients.map(toOption)} />
@@ -249,9 +249,9 @@ function AdminDetails({
   title: string;
 }) {
   return (
-    <details className="group overflow-hidden rounded-[24px] border border-[#dfe8d5] bg-[#fbfcf8] shadow-sm">
+    <details className="group overflow-hidden rounded-[20px] border border-[#dfe8d5] bg-[#fbfcf8] shadow-sm sm:rounded-[24px]">
       <summary className="cursor-pointer list-none p-4 marker:hidden [&::-webkit-details-marker]:hidden">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex gap-3">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#27412f] text-sm font-bold text-white">
               {accent}
@@ -261,7 +261,7 @@ function AdminDetails({
             <p className="mt-1 text-sm leading-6 text-[#657268]">{description}</p>
             </div>
           </div>
-          <span className="rounded-full bg-[#edf4e2] px-3 py-1 text-xs font-semibold text-[#607149] group-open:bg-[#27412f] group-open:text-white">
+          <span className="w-fit rounded-full bg-[#edf4e2] px-3 py-1 text-xs font-semibold text-[#607149] group-open:bg-[#27412f] group-open:text-white">
             <span className="group-open:hidden">Abrir</span>
             <span className="hidden group-open:inline">Fechar</span>
           </span>
@@ -299,14 +299,14 @@ function ManageableList({
           {items.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between gap-3 rounded-xl bg-[#f8faf5] px-3 py-2"
+              className="flex flex-col gap-2 rounded-xl bg-[#f8faf5] px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
             >
-              <span className="text-sm font-medium text-[#27382e]">{item.label}</span>
+              <span className="break-words text-sm font-medium text-[#27382e]">{item.label}</span>
               <form action={deleteAction}>
                 <input type="hidden" name="id" value={item.id} />
                 <button
                   type="submit"
-                  className="rounded-full bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a] transition hover:bg-[#e9c2c2]"
+                  className="w-full rounded-full bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a] transition hover:bg-[#e9c2c2] sm:w-auto"
                 >
                   Remover
                 </button>
@@ -415,7 +415,7 @@ function SubmitButton({ label }: { label: string }) {
   return (
     <button
       type="submit"
-      className="w-fit rounded-full bg-[#27412f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22]"
+      className="w-full rounded-full bg-[#27412f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22] sm:w-fit"
     >
       {label}
     </button>

@@ -27,7 +27,7 @@ export function AdminModal({
       >
         <header className="admin-modal-header">
           <div>
-            <p className="admin-modal-kicker">Area administrativa</p>
+            <p className="admin-modal-kicker">Área administrativa</p>
             <h2 className="admin-modal-title">{title}</h2>
             <p className="admin-modal-text">{description}</p>
           </div>

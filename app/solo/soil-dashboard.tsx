@@ -52,18 +52,18 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
   const phMarkerPosition = getPhMarkerPosition(minPh, maxPh, selectedPh);
 
   return (
-    <div className="mt-6 grid gap-6">
-      <section className="soil-hero-card p-5">
+    <div className="mt-5 grid gap-5 sm:mt-6 sm:gap-6">
+      <section className="soil-hero-card p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[1fr_320px] lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">Painel visual</p>
-            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">Como o solo conversa com a planta</h2>
+            <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">Como o solo conversa com a planta</h2>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-[#657268]">
-              Nutrientes, acidez e sintomas aparecem juntos para facilitar a leitura: primeiro voce entende o papel
+              Nutrientes, acidez e sintomas aparecem juntos para facilitar a leitura: primeiro você entende o papel
               de cada nutriente, depois compara a disponibilidade no pH escolhido.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-2 rounded-3xl bg-white/70 p-3">
+          <div className="grid grid-cols-1 gap-2 rounded-3xl bg-white/70 p-3 min-[380px]:grid-cols-3">
             <VisualMetric label="Nutrientes" value={String(nutrients.length)} />
             <VisualMetric label="Pontos pH" value={String(phPoints.length)} />
             <VisualMetric label="Sintomas" value={String(symptoms.length)} />
@@ -76,19 +76,19 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
           <EmptyState text="Nenhum nutriente cadastrado ainda." />
         ) : (
           nutrients.map((nutrient) => (
-            <article key={nutrient.id} className="nutrient-card p-5">
+            <article key={nutrient.id} className="nutrient-card p-4 sm:p-5">
               <div className="relative">
                 <div className="flex items-start gap-4">
                   <span className="nutrient-symbol">{nutrient.simbolo}</span>
                   <div className="min-w-0 pt-1">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#738072]">Nutriente</p>
-                    <h2 className="text-2xl font-semibold text-[#1f3127]">{nutrient.nome}</h2>
+                    <h2 className="text-xl font-semibold text-[#1f3127] sm:text-2xl">{nutrient.nome}</h2>
                     <p className="mt-1 text-sm text-[#657268]">Elemento essencial para acompanhar no manejo do solo.</p>
                   </div>
                 </div>
                 <div className="mt-5 soil-chip-grid">
-                  <SoilTextBlock label="Funcao" value={nutrient.funcao_na_planta} />
-                  <SoilTextBlock label="Deficiencia" value={nutrient.sintomas_deficiencia} />
+                  <SoilTextBlock label="Função" value={nutrient.funcao_na_planta} />
+                  <SoilTextBlock label="Deficiência" value={nutrient.sintomas_deficiencia} />
                   <SoilTextBlock label="Fontes" value={nutrient.fontes_naturais} />
                 </div>
               </div>
@@ -97,30 +97,30 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         )}
       </section>
 
-      <section className="ph-stage p-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <section className="ph-stage ph-stage--compact p-3 sm:p-5">
+        <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">pH e fertilidade</p>
-            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">Disponibilidade de nutrientes por pH</h2>
-            <p className="mt-2 max-w-3xl text-sm leading-7 text-[#657268]">
-              A escala mostra a passagem de um solo mais acido para uma faixa mais favoravel. As barras abaixo mudam
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#738072] sm:text-xs sm:tracking-[0.24em]">pH e fertilidade</p>
+            <h2 className="mt-1 text-xl font-semibold leading-tight text-[#1f3127] sm:mt-2 sm:text-3xl">Disponibilidade por pH</h2>
+            <p className="mt-2 hidden max-w-3xl text-sm leading-7 text-[#657268] sm:block">
+              A escala mostra a passagem de um solo mais ácido para uma faixa mais favorável. As barras abaixo mudam
               conforme o pH selecionado.
             </p>
           </div>
-          <div className="rounded-3xl bg-[#27412f] px-5 py-3 text-center text-white shadow-lg shadow-emerald-950/15">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lime-100">pH atual</p>
-            <p className="text-3xl font-bold">{selectedPh.toFixed(2).replace(".", ",")}</p>
+          <div className="rounded-2xl bg-[#27412f] px-4 py-2 text-center text-white shadow-lg shadow-emerald-950/15 sm:rounded-3xl sm:px-5 sm:py-3 lg:min-w-32">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-lime-100 sm:text-xs sm:tracking-[0.2em]">pH atual</p>
+            <p className="text-2xl font-bold leading-none sm:text-3xl sm:leading-normal">{selectedPh.toFixed(2).replace(".", ",")}</p>
           </div>
         </div>
 
-        <div className="mt-6 rounded-3xl bg-white/75 p-4">
+        <div className="mt-3 rounded-2xl bg-white/75 p-3 sm:mt-6 sm:rounded-3xl sm:p-4">
           <div className="ph-gradient">
             <span className="ph-marker" style={{ left: `${phMarkerPosition}%` }} />
           </div>
-          <div className="mt-3 flex justify-between text-xs font-semibold uppercase tracking-[0.16em] text-[#657268]">
-            <span>Mais acido</span>
-            <span>Faixa favoravel</span>
-            <span>Menos acido</span>
+          <div className="mt-2 flex justify-between gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.05em] text-[#657268] sm:mt-3 sm:text-xs sm:tracking-[0.16em]">
+            <span>Mais ácido</span>
+            <span>Faixa favorável</span>
+            <span>Menos ácido</span>
           </div>
           <input
             min={minPh}
@@ -129,23 +129,23 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
             type="range"
             value={selectedPh}
             onChange={(event) => setSelectedPh(Number(event.target.value))}
-            className="mt-5 w-full accent-[#5d7b1f]"
+            className="mt-3 w-full accent-[#5d7b1f] sm:mt-5"
           />
-          <div className="mt-2 flex justify-between text-sm text-[#657268]">
+          <div className="mt-1 flex justify-between text-xs text-[#657268] sm:mt-2 sm:text-sm">
             <span>pH {minPh.toFixed(1).replace(".", ",")}</span>
             <span>pH {maxPh.toFixed(1).replace(".", ",")}</span>
           </div>
         </div>
 
-        <div className="mt-5 grid gap-4 lg:grid-cols-[320px_1fr]">
-          <div className="rounded-3xl bg-[#f8faf5] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">Condicao estimada</p>
+        <div className="mt-3 grid gap-3 sm:mt-5 sm:gap-4 lg:grid-cols-[320px_1fr]">
+          <div className="condition-panel rounded-2xl bg-[#f8faf5] p-3 sm:rounded-3xl sm:p-4">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#758178] sm:text-xs sm:tracking-[0.18em]">Condição estimada</p>
             <ConditionLine label="Acidez" value={currentPhContext.descricao_acidez} />
             <ConditionLine label="Biologia" value={currentPhContext.atividade_biologica} />
-            <ConditionLine label="Aluminio" value={currentPhContext.presenca_aluminio} />
+            <ConditionLine label="Alumínio" value={currentPhContext.presenca_aluminio} />
           </div>
 
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid gap-2 sm:gap-3 md:grid-cols-2">
             {nutrients.map((nutrient) => {
               const percentage = interpolateAvailability(availability, phPoints, nutrient.id, selectedPh);
               const level = getAvailabilityLevel(percentage);
@@ -166,14 +166,14 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
                       {level.label}
                     </span>
                   </div>
-                  <div className="mt-4 flex items-center gap-3">
+                  <div className="mt-2 flex items-center gap-2 sm:mt-4 sm:gap-3">
                     <div className="availability-meter flex-1">
                       <div
                         className="availability-fill"
                         style={{ width: `${percentage}%`, background: level.color }}
                       />
                     </div>
-                    <span className="w-10 text-right text-sm font-bold text-[#1f3127]">
+                    <span className="w-9 text-right text-sm font-bold text-[#1f3127] sm:w-10">
                       {Math.round(percentage)}%
                     </span>
                   </div>
@@ -184,13 +184,13 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         </div>
       </section>
 
-      <section className="diagnosis-card p-5">
+      <section className="diagnosis-card p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">Diagnostico visual</p>
-            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">O sintoma aponta para qual nutriente?</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">Diagnóstico visual</p>
+            <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">O sintoma aponta para qual nutriente?</h2>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-[#657268]">
-              Escolha o que esta vendo na planta. O painel destaca a deficiencia nutricional mais provavel.
+              Escolha o que está vendo na planta. O painel destaca a deficiência nutricional mais provável.
             </p>
           </div>
 
@@ -215,7 +215,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
           <div className="diagnosis-result">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lime-100">Resultado</p>
             <p className="mt-3 text-4xl font-black">{likelyNutrient?.simbolo ?? "--"}</p>
-            <p className="mt-2 text-lg font-semibold">{likelyNutrient ? likelyNutrient.nome : "Sem diagnostico"}</p>
+            <p className="mt-2 text-lg font-semibold">{likelyNutrient ? likelyNutrient.nome : "Sem diagnóstico"}</p>
           </div>
 
           <div className="rounded-3xl bg-[#f8faf5] p-4">
@@ -225,7 +225,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
             </p>
             <p className="mt-3 text-sm leading-7 text-[#536158]">
               {likelyNutrient?.sintomas_deficiencia ||
-                "Quando houver dados completos no painel admin, este espaco mostra a explicacao do sintoma e a relacao com o nutriente."}
+                "Quando houver dados completos no painel admin, este espaço mostra a explicação do sintoma e a relação com o nutriente."}
             </p>
           </div>
         </div>
@@ -238,7 +238,7 @@ function SoilTextBlock({ label, value }: { label: string; value: string | null }
   return (
     <div className="soil-chip">
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">{label}</p>
-      <p className="mt-1 text-sm leading-6 text-[#22342a]">{value || "Ainda nao cadastrado."}</p>
+      <p className="mt-1 text-sm leading-6 text-[#22342a]">{value || "Ainda não cadastrado."}</p>
     </div>
   );
 }
@@ -254,9 +254,9 @@ function VisualMetric({ label, value }: { label: string; value: string }) {
 
 function ConditionLine({ label, value }: { label: string; value: string }) {
   return (
-    <div className="mt-4 border-t border-[#e1e8da] pt-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758178]">{label}</p>
-      <p className="mt-1 text-sm leading-6 text-[#22342a]">{value}</p>
+    <div className="condition-line">
+      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#758178] sm:text-xs sm:tracking-[0.16em]">{label}</p>
+      <p className="mt-0.5 text-sm leading-5 text-[#22342a] sm:mt-1 sm:leading-6">{value}</p>
     </div>
   );
 }
@@ -345,8 +345,8 @@ function interpolatePhContext(phPoints: PhPointRow[], selectedPh: number) {
     }, null) ?? null;
 
   return {
-    descricao_acidez: closestPoint?.descricao_acidez ?? "Sem descricao de acidez cadastrada.",
-    atividade_biologica: closestPoint?.atividade_biologica ?? "Sem descricao de atividade biologica cadastrada.",
-    presenca_aluminio: closestPoint?.presenca_aluminio ?? "Sem informacao de aluminio cadastrada.",
+    descricao_acidez: closestPoint?.descricao_acidez ?? "Sem descrição de acidez cadastrada.",
+    atividade_biologica: closestPoint?.atividade_biologica ?? "Sem descrição de atividade biológica cadastrada.",
+    presenca_aluminio: closestPoint?.presenca_aluminio ?? "Sem informação de alumínio cadastrada.",
   };
 }

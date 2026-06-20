@@ -95,12 +95,12 @@
   .catalog-page {
     min-height: 100vh;
     background: #f5f0e7;
-    padding: 1.5rem 1rem;
+    padding: 1rem 0.75rem;
     color: #18261f;
   }
 
   .global-panel {
-    border-radius: 32px;
+    border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.7);
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 18px 60px rgba(54, 72, 54, 0.08);
@@ -108,7 +108,7 @@
   }
 
   .global-card {
-    border-radius: 28px;
+    border-radius: 22px;
     border: 1px solid #dfe5d9;
     background: rgba(255, 255, 255, 0.92);
     box-shadow: 0 18px 50px rgba(40, 52, 38, 0.08);
@@ -122,5 +122,19 @@
     width: calc(100% - 2rem);
     max-width: 80rem;
     transform: translateX(-50%);
+  }
+
+  @media (min-width: 640px) {
+    .catalog-page {
+      padding: 1.5rem 1rem;
+    }
+
+    .global-panel {
+      border-radius: 32px;
+    }
+
+    .global-card {
+      border-radius: 28px;
+    }
   }
 }

@@ -73,28 +73,28 @@ export default async function SpeciesCatalogPage() {
   return (
     <div className="catalog-page">
       <main className="mx-auto w-full max-w-7xl">
-        <header className="global-panel p-6">
+        <header className="global-panel p-4 sm:p-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-3xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#6d7d66]">
-                Catalogo publico
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6d7d66] sm:tracking-[0.3em]">
+                Catálogo público
               </p>
-              <h1 className="mt-2 text-4xl font-semibold tracking-tight text-[#1d2d24] sm:text-5xl">
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#1d2d24] sm:text-5xl">
                 Plantas cadastradas no site
               </h1>
               <p className="mt-3 text-base leading-8 text-[#516156] sm:text-lg">
-                Veja especies, funcoes da planta, explicacoes simples e relacoes agroflorestais cadastradas.
+                Veja espécies, funções da planta, explicações simples e relações agroflorestais cadastradas.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <Link href="/solo" className="inline-flex rounded-full border border-[#d7dfcf] bg-[#f7faf3] px-4 py-2 text-sm font-semibold text-[#294032] transition hover:bg-[#edf4e5]">
-                Quimica do solo
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+              <Link href="/" className="inline-flex justify-center rounded-full border border-[#d7dfcf] bg-white/80 px-4 py-2 text-sm font-semibold text-[#294032] transition hover:bg-[#f7faf3]">
+                Início
               </Link>
-              <Link href="/" className="inline-flex rounded-full bg-[#5d7b1f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#4d6819]">
-                Inicio
+              <Link href="/solo" className="inline-flex justify-center rounded-full border border-[#d7dfcf] bg-[#f7faf3] px-4 py-2 text-sm font-semibold text-[#294032] transition hover:bg-[#edf4e5]">
+                Química do solo
               </Link>
-              <Link href="/admin" className="inline-flex rounded-full bg-[#5d7b1f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#4d6819]">
+              <Link href="/admin" className="inline-flex justify-center rounded-full bg-[#5d7b1f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#4d6819]">
                 Admin
               </Link>
             </div>

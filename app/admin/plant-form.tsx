@@ -58,15 +58,15 @@ export function PlantForm({ categories, species }: PlantFormProps) {
   }
 
   return (
-    <form action={formAction} className="space-y-4 rounded-3xl border border-[#dae2d0] bg-white p-5 shadow-sm">
+    <form action={formAction} className="space-y-4 rounded-[22px] border border-[#dae2d0] bg-white p-4 shadow-sm sm:rounded-3xl sm:p-5">
       <div>
         <h2 className="text-xl font-semibold text-[#1f3127]">
-          {isEditing ? "Editar especie" : "Cadastrar especie"}
+          {isEditing ? "Editar espécie" : "Cadastrar espécie"}
         </h2>
         <p className="mt-1 text-sm text-[#657268]">
           {isEditing
-            ? "Atualize os dados da especie selecionada e salve as alterações."
-            : "Preencha os dados principais da especie para publicar no catalogo."}
+            ? "Atualize os dados da espécie selecionada e salve as alterações."
+            : "Preencha os dados principais da espécie para publicar no catálogo."}
         </p>
       </div>
 
@@ -136,7 +136,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
             className="w-full rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition file:mr-4 file:rounded-full file:border-0 file:bg-[#27412f] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#1b2e22] focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
           />
           <span className="block text-xs text-[#6b776f]">
-            Envie uma imagem para o sistema. Se nao mandar arquivo, o link abaixo continua funcionando.
+            Envie uma imagem para o sistema. Se não mandar arquivo, o link abaixo continua funcionando.
           </span>
           <input
             name="fotoUrl"
@@ -177,9 +177,9 @@ export function PlantForm({ categories, species }: PlantFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-full bg-[#27412f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22] disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-full bg-[#27412f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
-        {isPending ? "Salvando..." : isEditing ? "Salvar alteracoes" : "Salvar especie"}
+        {isPending ? "Salvando..." : isEditing ? "Salvar alterações" : "Salvar espécie"}
       </button>
     </form>
   );

@@ -28,7 +28,7 @@ export function CreatePlantButton({ categories }: CreatePlantButtonProps) {
 
       {isOpen ? (
         <AdminModal
-          description="Preencha os dados principais para publicar uma nova especie no catalogo."
+          description="Preencha os dados principais para publicar uma nova espécie no catálogo."
           onClose={() => setIsOpen(false)}
           title="Criar nova planta"
         >

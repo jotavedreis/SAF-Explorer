@@ -6,17 +6,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
     background: rgba(12, 21, 15, 0.62);
     backdrop-filter: blur(8px);
   }
 
   .admin-modal {
     width: min(100%, 56rem);
-    max-height: min(90vh, 58rem);
+    max-height: calc(100dvh - 1rem);
     overflow-y: auto;
     border: 1px solid #d9e4ce;
-    border-radius: 30px;
+    border-radius: 22px;
     background: #ffffff;
     box-shadow: 0 30px 90px rgba(12, 21, 15, 0.35);
   }
@@ -28,18 +28,19 @@
 
   .admin-modal-header {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: stretch;
     gap: 1rem;
-    padding: 1.25rem;
+    padding: 1rem;
     border-bottom: 1px solid #edf1e7;
   }
 
   .admin-modal-body {
-    padding: 1.25rem;
+    padding: 1rem;
   }
 
   .admin-modal-close {
+    width: 100%;
     flex: 0 0 auto;
     border-radius: 9999px;
     border: 1px solid #d7dfcf;
@@ -65,7 +66,7 @@
 
   .admin-modal-title {
     margin-top: 0.35rem;
-    font-size: 1.55rem;
+    font-size: 1.35rem;
     line-height: 1.2;
     font-weight: 700;
     color: #1f3127;
@@ -85,7 +86,7 @@
 
   .admin-summary-media {
     display: flex;
-    min-height: 10rem;
+    min-height: 9rem;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -127,7 +128,7 @@
   .admin-danger-actions {
     margin-top: 1rem;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 0.5rem;
   }
 
@@ -158,6 +159,41 @@
 
   .admin-secondary-button:hover {
     background: #f8eeee;
+  }
+
+  @media (min-width: 640px) {
+    .admin-modal-backdrop {
+      padding: 1rem;
+    }
+
+    .admin-modal {
+      max-height: min(90vh, 58rem);
+      border-radius: 30px;
+    }
+
+    .admin-modal-header {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 1.25rem;
+    }
+
+    .admin-modal-body {
+      padding: 1.25rem;
+    }
+
+    .admin-modal-close {
+      width: auto;
+    }
+
+    .admin-modal-title {
+      font-size: 1.55rem;
+    }
+
+    .admin-danger-actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 
   @media (min-width: 768px) {

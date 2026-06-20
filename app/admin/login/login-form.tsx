@@ -22,7 +22,7 @@ export function LoginForm() {
       supabase = createClient();
     } catch {
       setIsLoading(false);
-      setErrorMessage("Supabase nao esta configurado no ambiente de deploy.");
+      setErrorMessage("Supabase não está configurado no ambiente de deploy.");
       return;
     }
 
@@ -34,7 +34,7 @@ export function LoginForm() {
     setIsLoading(false);
 
     if (error) {
-      setErrorMessage("Nao foi possivel entrar. Verifique e-mail e senha.");
+      setErrorMessage("Não foi possível entrar. Verifique e-mail e senha.");
       return;
     }
 
@@ -45,13 +45,13 @@ export function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md rounded-[30px] border border-white/10 bg-white/95 p-6 text-[#132117] shadow-[0_30px_80px_rgba(0,0,0,0.3)] backdrop-blur"
+      className="w-full max-w-md rounded-[22px] border border-white/10 bg-white/95 p-4 text-[#132117] shadow-[0_30px_80px_rgba(0,0,0,0.3)] backdrop-blur sm:rounded-[30px] sm:p-6"
     >
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#70816f]">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#70816f] sm:tracking-[0.3em]">
           Entrar no painel
         </p>
-        <h2 className="mt-2 text-2xl font-semibold text-[#1c2e24]">
+        <h2 className="mt-2 text-xl font-semibold text-[#1c2e24] sm:text-2xl">
           Login do administrador
         </h2>
         <p className="mt-2 text-sm leading-7 text-[#5b6960]">

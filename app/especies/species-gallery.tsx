@@ -99,7 +99,7 @@ export function SpeciesGallery({
 
   return (
     <>
-      <section className="global-card mt-6 p-5">
+      <section className="global-card mt-5 p-4 sm:mt-6 sm:p-5">
         <div className="grid gap-4 lg:grid-cols-[1fr_280px]">
           <label className="space-y-2 text-sm font-medium text-[#405046]">
             <span>Buscar por nome</span>
@@ -129,10 +129,10 @@ export function SpeciesGallery({
         </div>
       </section>
 
-      <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="mt-5 grid gap-4 sm:mt-6 sm:grid-cols-2 xl:grid-cols-3">
         {filteredSpecies.length === 0 ? (
           <div className="col-span-full rounded-[28px] border border-dashed border-[#d5ddcd] bg-white/80 p-8 text-center">
-            <p className="text-sm font-medium text-[#526255]">Nenhuma especie encontrada.</p>
+            <p className="text-sm font-medium text-[#526255]">Nenhuma espécie encontrada.</p>
             <p className="mt-2 text-sm text-[#738076]">Tente buscar outro nome ou limpar o filtro de função.</p>
           </div>
         ) : (
@@ -141,9 +141,9 @@ export function SpeciesGallery({
               key={item.id}
               type="button"
               onClick={() => setSelectedSpecies(item)}
-              className="group overflow-hidden rounded-[28px] border border-[#dfe6d9] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(46,66,45,0.1)]"
+              className="group overflow-hidden rounded-[22px] border border-[#dfe6d9] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(46,66,45,0.1)] sm:rounded-[28px]"
             >
-              <div className="h-44 bg-[linear-gradient(135deg,_#9bb36f,_#5f7d2a)]">
+              <div className="h-40 bg-[linear-gradient(135deg,_#9bb36f,_#5f7d2a)] sm:h-44">
                 {item.foto_url ? (
                   <img
                     src={item.foto_url}
@@ -152,13 +152,13 @@ export function SpeciesGallery({
                   />
                 ) : null}
               </div>
-              <div className="space-y-3 p-5">
+              <div className="space-y-3 p-4 sm:p-5">
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#6f7f6b]">
                     {categoryMap.get(item.categoria_id) ?? "Categoria"}
                   </p>
-                  <h2 className="mt-2 text-2xl font-semibold text-[#1f3127]">{item.nome_popular}</h2>
-                  <p className="text-sm italic text-[#607066]">{item.nome_cientifico ?? "Sem nome cientifico"}</p>
+                  <h2 className="mt-2 text-xl font-semibold text-[#1f3127] sm:text-2xl">{item.nome_popular}</h2>
+                  <p className="text-sm italic text-[#607066]">{item.nome_cientifico ?? "Sem nome científico"}</p>
                 </div>
                 <FunctionBadges functions={speciesFunctionMap.get(item.id) ?? []} />
               </div>
@@ -241,44 +241,44 @@ function SpeciesDetailModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0c150f]/65 px-4 py-6 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0c150f]/65 px-2 py-2 backdrop-blur-sm sm:px-4 sm:py-6"
       onClick={onClose}
     >
       <div
-        className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[32px] border border-[#d9e4ce] bg-white shadow-[0_30px_90px_rgba(12,21,15,0.35)]"
+        className="max-h-[calc(100dvh-1rem)] w-full max-w-5xl overflow-y-auto rounded-[22px] border border-[#d9e4ce] bg-white shadow-[0_30px_90px_rgba(12,21,15,0.35)] sm:max-h-[90vh] sm:rounded-[32px]"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-[#e6ece0] p-5 sm:p-6">
+        <div className="flex flex-col gap-4 border-b border-[#e6ece0] p-4 sm:flex-row sm:items-start sm:justify-between sm:p-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#738072]">Detalhes da planta</p>
-            <h2 className="mt-2 text-3xl font-semibold text-[#1f3127]">{selectedSpecies.nome_popular}</h2>
-            <p className="mt-1 text-sm italic text-[#607066]">{selectedSpecies.nome_cientifico ?? "Sem nome cientifico"}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#738072] sm:tracking-[0.28em]">Detalhes da planta</p>
+            <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">{selectedSpecies.nome_popular}</h2>
+            <p className="mt-1 text-sm italic text-[#607066]">{selectedSpecies.nome_cientifico ?? "Sem nome científico"}</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-[#d7dfcf] bg-[#f7faf3] px-4 py-2 text-sm font-medium text-[#294032] transition hover:bg-[#edf4e5]"
+            className="w-full rounded-full border border-[#d7dfcf] bg-[#f7faf3] px-4 py-2 text-sm font-medium text-[#294032] transition hover:bg-[#edf4e5] sm:w-auto"
           >
             Fechar
           </button>
         </div>
 
         <div className="grid gap-0 lg:grid-cols-[1fr_0.95fr]">
-          <div className="bg-[#f8faf5] p-4 sm:p-6">
+          <div className="bg-[#f8faf5] p-3 sm:p-6">
             {selectedSpecies.foto_url ? (
               <img
                 src={selectedSpecies.foto_url}
                 alt={`Foto completa de ${selectedSpecies.nome_popular}`}
-                className="h-full max-h-[34rem] w-full rounded-[26px] object-cover"
+                className="max-h-[22rem] w-full rounded-[20px] object-cover sm:max-h-[34rem] sm:rounded-[26px]"
               />
             ) : (
-              <div className="flex min-h-[20rem] items-center justify-center rounded-[26px] border border-dashed border-[#d8e0d1] bg-white text-sm text-[#728076]">
+              <div className="flex min-h-[14rem] items-center justify-center rounded-[20px] border border-dashed border-[#d8e0d1] bg-white text-sm text-[#728076] sm:min-h-[20rem] sm:rounded-[26px]">
                 Nenhuma foto cadastrada.
               </div>
             )}
           </div>
 
-          <div className="space-y-4 p-5 sm:p-6">
+          <div className="space-y-4 p-4 sm:p-6">
             <InfoBox label="Categoria" value={categoryName} />
             <div className="rounded-2xl bg-[#f8faf5] px-4 py-3">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">Funções da planta</p>
@@ -289,7 +289,7 @@ function SpeciesDetailModal({
             <div className="rounded-2xl bg-[#f8faf5] px-4 py-3">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">O que esta planta faz?</p>
               <p className="mt-1 max-h-64 overflow-y-auto leading-7 text-[#22342a]">
-                {selectedSpecies.explicacao ?? "Sem descricao cadastrada."}
+                {selectedSpecies.explicacao ?? "Sem descrição cadastrada."}
               </p>
             </div>
             <div className="rounded-2xl bg-[#f8faf5] px-4 py-3">

@@ -2,7 +2,7 @@
   .soil-hero-card {
     position: relative;
     overflow: hidden;
-    border-radius: 28px;
+    border-radius: 22px;
     border: 1px solid #dfe8d5;
     background:
       radial-gradient(circle at 12% 12%, rgba(132, 172, 76, 0.22), transparent 32%),
@@ -14,7 +14,7 @@
   .nutrient-card {
     position: relative;
     overflow: hidden;
-    border-radius: 28px;
+    border-radius: 22px;
     border: 1px solid #dfe5d9;
     background: #ffffff;
     box-shadow: 0 18px 50px rgba(40, 52, 38, 0.08);
@@ -30,14 +30,14 @@
 
   .nutrient-symbol {
     display: flex;
-    height: 4.5rem;
-    width: 4.5rem;
+    height: 3.75rem;
+    width: 3.75rem;
     align-items: center;
     justify-content: center;
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     background: linear-gradient(135deg, #27412f, #5d7b1f);
     color: #ffffff;
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     font-weight: 800;
     box-shadow: 0 14px 30px rgba(39, 65, 47, 0.24);
   }
@@ -56,7 +56,7 @@
   .ph-stage {
     position: relative;
     overflow: hidden;
-    border-radius: 28px;
+    border-radius: 22px;
     border: 1px solid #dfe5d9;
     background:
       linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 245, 0.94)),
@@ -66,7 +66,7 @@
 
   .ph-gradient {
     position: relative;
-    height: 1rem;
+    height: 0.75rem;
     overflow: hidden;
     border-radius: 9999px;
     background: linear-gradient(90deg, #d86c58 0%, #dfb15f 42%, #74a648 72%, #3f8f73 100%);
@@ -75,25 +75,25 @@
   .ph-marker {
     position: absolute;
     top: 50%;
-    height: 2rem;
-    width: 2rem;
+    height: 1.5rem;
+    width: 1.5rem;
     transform: translate(-50%, -50%);
     border-radius: 9999px;
-    border: 4px solid #ffffff;
+    border: 3px solid #ffffff;
     background: #27412f;
     box-shadow: 0 10px 26px rgba(24, 38, 31, 0.26);
   }
 
   .availability-card {
-    border-radius: 1.25rem;
+    border-radius: 1rem;
     border: 1px solid #e1e8da;
     background: #ffffff;
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .availability-meter {
     position: relative;
-    height: 0.7rem;
+    height: 0.55rem;
     overflow: hidden;
     border-radius: 9999px;
     background: #e7eddf;
@@ -105,8 +105,18 @@
     transition: width 180ms ease;
   }
 
+  .condition-panel {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .condition-line {
+    border-top: 1px solid #e1e8da;
+    padding-top: 0.55rem;
+  }
+
   .diagnosis-card {
-    border-radius: 28px;
+    border-radius: 22px;
     border: 1px solid #dfe5d9;
     background:
       radial-gradient(circle at 14% 0%, rgba(216, 108, 88, 0.16), transparent 30%),
@@ -116,10 +126,58 @@
   }
 
   .diagnosis-result {
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     background: #27412f;
     color: #ffffff;
     padding: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .soil-hero-card,
+    .nutrient-card,
+    .ph-stage,
+    .diagnosis-card {
+      border-radius: 28px;
+    }
+
+    .nutrient-symbol {
+      height: 4.5rem;
+      width: 4.5rem;
+      border-radius: 1.5rem;
+      font-size: 1.7rem;
+    }
+
+    .diagnosis-result {
+      border-radius: 1.5rem;
+    }
+
+    .ph-gradient {
+      height: 1rem;
+    }
+
+    .ph-marker {
+      height: 2rem;
+      width: 2rem;
+      border-width: 4px;
+    }
+
+    .availability-card {
+      border-radius: 1.25rem;
+      padding: 1rem;
+    }
+
+    .availability-meter {
+      height: 0.7rem;
+    }
+
+    .condition-panel {
+      display: block;
+    }
+
+    .condition-line {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
   }
 
   @media (min-width: 768px) {
