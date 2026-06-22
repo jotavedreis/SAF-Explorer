@@ -45,7 +45,7 @@ export function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md rounded-[22px] border border-white/10 bg-white/95 p-4 text-[#132117] shadow-[0_30px_80px_rgba(0,0,0,0.3)] backdrop-blur sm:rounded-[30px] sm:p-6"
+      className="admin-login-card w-full max-w-md rounded-[22px] border border-white/10 bg-white/95 p-4 text-[#132117] shadow-[0_30px_80px_rgba(0,0,0,0.3)] backdrop-blur sm:rounded-[30px] sm:p-6"
     >
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#70816f] sm:tracking-[0.3em]">

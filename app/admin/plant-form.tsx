@@ -58,7 +58,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
   }
 
   return (
-    <form action={formAction} className="space-y-4 rounded-[22px] border border-[#dae2d0] bg-white p-4 shadow-sm sm:rounded-3xl sm:p-5">
+    <form action={formAction} className="space-y-4 border border-[#243528]/14 bg-[#f4f5eb]/72 p-4 shadow-sm sm:p-5">
       <div>
         <h2 className="text-xl font-semibold text-[#1f3127]">
           {isEditing ? "Editar espécie" : "Cadastrar espécie"}
@@ -78,7 +78,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
           <input
             name="nomePopular"
             required
-            className="w-full rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
             placeholder="Ex.: Ipê-amarelo"
             value={formValues.nomePopular}
             onChange={(event) => updateField("nomePopular", event.target.value)}
@@ -90,7 +90,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
           <input
             name="nomeCientifico"
             required
-            className="w-full rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
             placeholder="Ex.: Handroanthus albus"
             value={formValues.nomeCientifico}
             onChange={(event) => updateField("nomeCientifico", event.target.value)}
@@ -104,7 +104,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
             required
             value={formValues.categoriaId}
             onChange={(event) => updateField("categoriaId", event.target.value)}
-            className="w-full rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
           >
             <option value="" disabled>
               Selecione uma categoria
@@ -120,12 +120,12 @@ export function PlantForm({ categories, species }: PlantFormProps) {
         <label className="space-y-1 text-sm text-[#405046] md:col-span-2">
           <span>Foto da planta</span>
           {species?.foto_url ? (
-            <div className="rounded-2xl border border-[#dde5d5] bg-[#f6faf2] p-3">
+            <div className="border border-[#243528]/14 bg-[#eef3e8]/70 p-3">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#738072]">Foto atual</p>
               <img
                 src={species.foto_url}
                 alt={`Foto atual de ${species.nome_popular}`}
-                className="mt-2 h-40 w-full rounded-xl object-cover"
+                className="mt-2 h-40 w-full object-cover"
               />
             </div>
           ) : null}
@@ -133,7 +133,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
             name="fotoArquivo"
             type="file"
             accept="image/*"
-            className="w-full rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition file:mr-4 file:rounded-full file:border-0 file:bg-[#27412f] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#1b2e22] focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition file:mr-4 file:border-0 file:bg-[#12251a] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#f3f1e8] hover:file:bg-[#223a2a] focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
           />
           <span className="block text-xs text-[#6b776f]">
             Envie uma imagem para o sistema. Se não mandar arquivo, o link abaixo continua funcionando.
@@ -141,7 +141,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
           <input
             name="fotoUrl"
             type="url"
-            className="w-full rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
             placeholder="https://..."
             value={formValues.fotoUrl}
             onChange={(event) => updateField("fotoUrl", event.target.value)}
@@ -154,7 +154,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
             name="explicacao"
             required
             rows={4}
-            className="w-full resize-y rounded-xl border border-[#d4dcc8] bg-[#f9fbf6] px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+            className="w-full resize-y border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
             placeholder="Caracteristicas, uso no paisagismo, exigencias e observacoes agronomicas."
             value={formValues.explicacao}
             onChange={(event) => updateField("explicacao", event.target.value)}
@@ -164,10 +164,10 @@ export function PlantForm({ categories, species }: PlantFormProps) {
 
       {state.message ? (
         <p
-          className={`rounded-xl px-3 py-2 text-sm ${
+          className={`admin-form-message rounded-xl px-3 py-2 text-sm ${
             state.status === "success"
-              ? "bg-emerald-100 text-emerald-900"
-              : "bg-amber-100 text-amber-900"
+              ? "admin-form-message--success bg-emerald-100 text-emerald-900"
+              : "admin-form-message--warning bg-amber-100 text-amber-900"
           }`}
         >
           {state.message}
@@ -177,7 +177,7 @@ export function PlantForm({ categories, species }: PlantFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-full bg-[#27412f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="w-full bg-[#12251a] px-5 py-2 text-sm font-semibold text-[#f3f1e8] transition hover:bg-[#223a2a] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {isPending ? "Salvando..." : isEditing ? "Salvar alterações" : "Salvar espécie"}
       </button>

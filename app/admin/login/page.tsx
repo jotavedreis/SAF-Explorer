@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "../../theme-toggle";
 import { LoginForm } from "./login-form";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +15,7 @@ export default function AdminLoginPage() {
           <Link href="/" className="back-link">
             Voltar
           </Link>
+          <ThemeToggle />
         </div>
 
         <LoginForm />

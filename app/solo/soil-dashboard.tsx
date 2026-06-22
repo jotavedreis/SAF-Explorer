@@ -63,7 +63,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
               de cada nutriente, depois compara a disponibilidade no pH escolhido.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-2 rounded-3xl bg-white/70 p-3 min-[380px]:grid-cols-3">
+          <div className="theme-readable-surface grid grid-cols-1 gap-2 bg-white/70 p-3 min-[380px]:grid-cols-3">
             <VisualMetric label="Nutrientes" value={String(nutrients.length)} />
             <VisualMetric label="Pontos pH" value={String(phPoints.length)} />
             <VisualMetric label="Sintomas" value={String(symptoms.length)} />
@@ -113,7 +113,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
           </div>
         </div>
 
-        <div className="mt-3 rounded-2xl bg-white/75 p-3 sm:mt-6 sm:rounded-3xl sm:p-4">
+        <div className="theme-readable-surface mt-3 bg-white/75 p-3 sm:mt-6 sm:p-4">
           <div className="ph-gradient">
             <span className="ph-marker" style={{ left: `${phMarkerPosition}%` }} />
           </div>
@@ -138,7 +138,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         </div>
 
         <div className="mt-3 grid gap-3 sm:mt-5 sm:gap-4 lg:grid-cols-[320px_1fr]">
-          <div className="condition-panel rounded-2xl bg-[#f8faf5] p-3 sm:rounded-3xl sm:p-4">
+          <div className="theme-readable-surface condition-panel bg-[#f8faf5] p-3 sm:p-4">
             <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#758178] sm:text-xs sm:tracking-[0.18em]">Condição estimada</p>
             <ConditionLine label="Acidez" value={currentPhContext.descricao_acidez} />
             <ConditionLine label="Biologia" value={currentPhContext.atividade_biologica} />
@@ -160,7 +160,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
                       <p className="font-semibold text-[#22342a]">{nutrient.nome}</p>
                     </div>
                     <span
-                      className="rounded-full px-3 py-1 text-xs font-bold"
+                      className="availability-level-badge rounded-full px-3 py-1 text-xs font-bold"
                       style={{ background: level.bg, color: level.fg }}
                     >
                       {level.label}
@@ -173,7 +173,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
                         style={{ width: `${percentage}%`, background: level.color }}
                       />
                     </div>
-                    <span className="w-9 text-right text-sm font-bold text-[#1f3127] sm:w-10">
+                    <span className="availability-percent w-9 text-right text-sm font-bold text-[#1f3127] sm:w-10">
                       {Math.round(percentage)}%
                     </span>
                   </div>
@@ -218,7 +218,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
             <p className="mt-2 text-lg font-semibold">{likelyNutrient ? likelyNutrient.nome : "Sem diagnóstico"}</p>
           </div>
 
-          <div className="rounded-3xl bg-[#f8faf5] p-4">
+          <div className="theme-readable-surface bg-[#f8faf5] p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">Leitura sugerida</p>
             <p className="mt-2 text-xl font-semibold text-[#1f3127]">
               {selectedSymptom ? selectedSymptom.descricao : "Selecione um sintoma"}
@@ -245,7 +245,7 @@ function SoilTextBlock({ label, value }: { label: string; value: string | null }
 
 function VisualMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-[#f8faf5] px-3 py-4 text-center">
+    <div className="theme-readable-surface bg-[#f8faf5] px-3 py-4 text-center">
       <p className="text-2xl font-bold text-[#1f3127]">{value}</p>
       <p className="mt-1 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#738072]">{label}</p>
     </div>
@@ -263,7 +263,7 @@ function ConditionLine({ label, value }: { label: string; value: string }) {
 
 function EmptyState({ text }: { text: string }) {
   return (
-    <div className="col-span-full rounded-[28px] border border-dashed border-[#d5ddcd] bg-white/80 p-8 text-center">
+    <div className="theme-readable-surface col-span-full border border-dashed border-[#d5ddcd] bg-white/80 p-8 text-center">
       <p className="text-sm font-medium text-[#526255]">{text}</p>
     </div>
   );

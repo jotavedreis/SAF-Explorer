@@ -2,22 +2,22 @@
   .admin-modal-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 60;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    background: rgba(12, 21, 15, 0.62);
-    backdrop-filter: blur(8px);
+    background: rgba(7, 11, 8, 0.72);
+    backdrop-filter: blur(12px);
   }
 
   .admin-modal {
     width: min(100%, 56rem);
     max-height: calc(100dvh - 1rem);
     overflow-y: auto;
-    border: 1px solid #d9e4ce;
-    border-radius: 22px;
-    background: #ffffff;
+    border: 1px solid rgba(36, 53, 40, 0.22);
+    border-radius: 0;
+    background: rgba(244, 245, 235, 0.96);
     box-shadow: 0 30px 90px rgba(12, 21, 15, 0.35);
   }
 
@@ -44,7 +44,7 @@
     flex: 0 0 auto;
     border-radius: 9999px;
     border: 1px solid #d7dfcf;
-    background: #f7faf3;
+    background: #eef3e8;
     padding: 0.5rem 0.85rem;
     font-size: 0.875rem;
     font-weight: 600;
@@ -69,7 +69,7 @@
     font-size: 1.35rem;
     line-height: 1.2;
     font-weight: 700;
-    color: #1f3127;
+    color: #111b15;
   }
 
   .admin-modal-text {
@@ -91,8 +91,8 @@
     justify-content: center;
     overflow: hidden;
     border: 1px dashed #d8e0d1;
-    border-radius: 1.25rem;
-    background: #f8faf5;
+    border-radius: 0;
+    background: #eef3e8;
     color: #738076;
     font-size: 0.875rem;
   }
@@ -106,7 +106,7 @@
   .admin-summary-category {
     margin-top: 0.75rem;
     display: inline-flex;
-    border-radius: 9999px;
+    border-radius: 0;
     background: #ecf3e2;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
@@ -168,7 +168,7 @@
 
     .admin-modal {
       max-height: min(90vh, 58rem);
-      border-radius: 30px;
+      border-radius: 0;
     }
 
     .admin-modal-header {

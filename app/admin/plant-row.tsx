@@ -42,7 +42,7 @@ export function PlantRow({ categories, categoryName, functions, plant }: PlantRo
 
   return (
     <>
-      <article className="group overflow-hidden rounded-[22px] border border-[#dfe6d9] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(46,66,45,0.1)] sm:rounded-[28px]">
+      <article className="group overflow-hidden border border-[#243528]/16 bg-[#f4f5eb]/82 text-left shadow-[0_18px_50px_rgba(17,27,21,0.08)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-[#243528]/30">
         <div className="h-40 bg-[linear-gradient(135deg,_#9bb36f,_#5f7d2a)] sm:h-44">
           {plant.foto_url ? (
             <img
@@ -72,14 +72,14 @@ export function PlantRow({ categories, categoryName, functions, plant }: PlantRo
             <button
               type="button"
               onClick={() => toggleModal("edit")}
-              className="rounded-full bg-[#e8f1dc] px-3 py-1 text-xs font-semibold text-[#4d651f] transition hover:bg-[#dce8c8]"
+              className="admin-edit-button bg-[#e8f1dc] px-3 py-1 text-xs font-semibold text-[#4d651f] transition hover:bg-[#dce8c8]"
             >
               Editar
             </button>
             <button
               type="button"
               onClick={() => toggleModal("delete")}
-              className="rounded-full bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a] transition hover:bg-[#e9c2c2]"
+              className="admin-remove-button bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a] transition hover:bg-[#e9c2c2]"
             >
               Remover
             </button>
@@ -137,7 +137,7 @@ function FunctionBadges({ functions }: { functions: FunctionOption[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {functions.slice(0, 4).map((funcao) => (
-        <span key={funcao.id} className="rounded-full bg-[#edf4e2] px-3 py-1 text-xs font-semibold text-[#607149]">
+        <span key={funcao.id} className="admin-function-badge rounded-full bg-[#edf4e2] px-3 py-1 text-xs font-semibold text-[#607149]">
           {funcao.nome}
         </span>
       ))}
