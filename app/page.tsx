@@ -1,5 +1,28 @@
 import Link from "next/link";
 
+const groupMembers = [
+  {
+    affiliation: "Licenciatura em Química, Universidade do Estado do Pará, 2026",
+    email: "",
+    name: "Isabelle da Silva da Cunha",
+  },
+  {
+    affiliation: "ISARH/Universidade Federal Rural da Amazônia (UFRA)",
+    email: "gabriel.resque@ufra.edu.br",
+    name: "Antonio Gabriel Lima Resque",
+  },
+  {
+    affiliation: "ICA/Universidade Federal Rural da Amazônia (UFRA)",
+    email: "breno.rayol@ufra.edu.br",
+    name: "Breno Pinto Rayol",
+  },
+  {
+    affiliation: "INEAF/Universidade Federal do Pará (UFPA)",
+    email: "ricardo.macedo.ns@gmail.com",
+    name: "Ricardo Macedo do Nascimento",
+  },
+];
+
 export default function Home() {
   return (
     <main className="relative isolate min-h-dvh overflow-hidden bg-[#f5f0e7] px-4 py-5 text-[#18261f] sm:px-6 lg:px-8">
@@ -123,6 +146,27 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <section className="global-panel mb-5 p-5 sm:p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f7f6b]">Equipe</p>
+              <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">
+                Integrantes do grupo
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-[#657268]">
+              Nomes, vínculos institucionais e contatos dos responsáveis pelo desenvolvimento e organização do
+              SAF Explorer.
+            </p>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            {groupMembers.map((member) => (
+              <MemberCard key={member.name} {...member} />
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   );
@@ -171,5 +215,24 @@ function ProcessStep({ number, text, title }: { number: string; text: string; ti
       <h3 className="mt-2 font-semibold text-[#1f3127]">{title}</h3>
       <p className="mt-1 text-sm leading-6 text-[#657268]">{text}</p>
     </div>
+  );
+}
+
+function MemberCard({ affiliation, email, name }: { affiliation: string; email: string; name: string }) {
+  return (
+    <article className="rounded-2xl border border-[#dfe5d9] bg-white/85 p-4">
+      <p className="text-lg font-semibold text-[#1f3127]">{name}</p>
+      <p className="mt-2 text-sm leading-6 text-[#657268]">{affiliation}</p>
+      {email ? (
+        <a
+          href={`mailto:${email}`}
+          className="mt-3 inline-flex text-sm font-semibold text-[#36543d] transition hover:text-[#1f3127]"
+        >
+          {email}
+        </a>
+      ) : (
+        <p className="mt-3 text-sm font-semibold text-[#8a7560]">Email a informar</p>
+      )}
+    </article>
   );
 }
