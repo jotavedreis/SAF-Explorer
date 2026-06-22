@@ -8,7 +8,7 @@ const backgroundImage = "/images/palmeira-planta-2.jpeg";
 
 const groupMembers = [
   {
-    affiliation: "Licenciatura em Química, Universidade do Estado do Pará, 2026",
+    affiliation: "Licenciatura em Química, Universidade do Estado do Pará (UEPA)",
     email: "I7165135@gmail.com",
     name: "Isabelle da Silva da Cunha",
   },
