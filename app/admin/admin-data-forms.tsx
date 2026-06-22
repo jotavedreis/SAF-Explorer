@@ -82,7 +82,7 @@ export function AdminDataForms({
   ];
 
   return (
-    <section className="rounded-[24px] border border-[#dae2d0] bg-white p-4 shadow-sm sm:rounded-[30px] sm:p-5">
+    <section className="border border-[#243528]/16 bg-[#f4f5eb]/82 p-4 shadow-[0_18px_60px_rgba(17,27,21,0.08)] backdrop-blur-md sm:p-5">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#738072]">Dados do sistema</p>
@@ -93,7 +93,10 @@ export function AdminDataForms({
         </div>
         <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 lg:min-w-[420px] lg:w-auto">
           {modules.map((module) => (
-            <div key={module.label} className="rounded-2xl bg-[#f8faf5] px-3 py-2 text-center">
+            <div
+              key={module.label}
+              className="admin-count-tile border border-[#243528]/12 bg-[#eef3e8]/70 px-3 py-2 text-center"
+            >
               <p className="text-lg font-bold text-[#1f3127]">{module.value}</p>
               <p className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[#738072]">{module.label}</p>
             </div>
@@ -249,11 +252,11 @@ function AdminDetails({
   title: string;
 }) {
   return (
-    <details className="group overflow-hidden rounded-[20px] border border-[#dfe8d5] bg-[#fbfcf8] shadow-sm sm:rounded-[24px]">
+    <details className="group overflow-hidden border border-[#243528]/14 bg-[#f8f8f1]/78 shadow-[0_12px_40px_rgba(17,27,21,0.06)]">
       <summary className="cursor-pointer list-none p-4 marker:hidden [&::-webkit-details-marker]:hidden">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#27412f] text-sm font-bold text-white">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#12251a] text-sm font-bold text-[#f3f1e8]">
               {accent}
             </span>
             <div>
@@ -261,13 +264,13 @@ function AdminDetails({
             <p className="mt-1 text-sm leading-6 text-[#657268]">{description}</p>
             </div>
           </div>
-          <span className="w-fit rounded-full bg-[#edf4e2] px-3 py-1 text-xs font-semibold text-[#607149] group-open:bg-[#27412f] group-open:text-white">
+          <span className="admin-details-toggle w-fit border border-[#243528]/12 bg-[#eef3e8]/70 px-3 py-1 text-xs font-semibold text-[#263e2b] group-open:bg-[#12251a] group-open:text-[#f3f1e8]">
             <span className="group-open:hidden">Abrir</span>
             <span className="hidden group-open:inline">Fechar</span>
           </span>
         </div>
       </summary>
-      <div className="border-t border-[#e5eddd] p-4">{children}</div>
+      <div className="border-t border-[#243528]/12 p-4">{children}</div>
     </details>
   );
 }
@@ -284,10 +287,10 @@ function ManageableList({
   title: string;
 }) {
   return (
-    <div className="mt-4 rounded-2xl border border-[#e1e8da] bg-white p-3">
+    <div className="admin-manageable-list mt-4 border border-[#243528]/12 bg-[#f4f5eb]/72 p-3">
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">{title}</p>
-        <span className="rounded-full bg-[#f0f5e9] px-2 py-1 text-xs font-semibold text-[#607149]">
+        <span className="admin-list-count bg-[#eef3e8] px-2 py-1 text-xs font-semibold text-[#263e2b]">
           {items.length}
         </span>
       </div>
@@ -299,14 +302,14 @@ function ManageableList({
           {items.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col gap-2 rounded-xl bg-[#f8faf5] px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
+              className="admin-list-item flex flex-col gap-2 border border-[#243528]/10 bg-[#eef3e8]/70 px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
             >
               <span className="break-words text-sm font-medium text-[#27382e]">{item.label}</span>
               <form action={deleteAction}>
                 <input type="hidden" name="id" value={item.id} />
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a] transition hover:bg-[#e9c2c2] sm:w-auto"
+                  className="admin-remove-button w-full bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a] transition hover:bg-[#e9c2c2] sm:w-auto"
                 >
                   Remover
                 </button>
@@ -362,7 +365,7 @@ function AdminInput({
         required={required}
         step={step}
         type={type}
-        className="w-full rounded-xl border border-[#d4dcc8] bg-white px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+        className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
       />
     </label>
   );
@@ -375,7 +378,7 @@ function AdminTextarea({ label, name }: { label: string; name: string }) {
       <textarea
         name={name}
         rows={3}
-        className="w-full resize-y rounded-xl border border-[#d4dcc8] bg-white px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+        className="w-full resize-y border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
       />
     </label>
   );
@@ -396,7 +399,7 @@ function AdminSelect({
       <select
         name={name}
         required
-        className="w-full rounded-xl border border-[#d4dcc8] bg-white px-3 py-2 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae]"
+        className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
       >
         <option value="" disabled>
           Selecione
@@ -415,7 +418,7 @@ function SubmitButton({ label }: { label: string }) {
   return (
     <button
       type="submit"
-      className="w-full rounded-full bg-[#27412f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22] sm:w-fit"
+      className="w-full bg-[#12251a] px-4 py-2 text-sm font-semibold text-[#f3f1e8] transition hover:bg-[#223a2a] sm:w-fit"
     >
       {label}
     </button>

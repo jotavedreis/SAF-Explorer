@@ -1,9 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useTheme } from "./theme-context";
+
+const backgroundImage = "/images/palmeira-planta-2.jpeg";
 
 const groupMembers = [
   {
     affiliation: "Licenciatura em Química, Universidade do Estado do Pará, 2026",
-    email: "",
+    email: "I7165135@gmail.com",
     name: "Isabelle da Silva da Cunha",
   },
   {
@@ -24,146 +30,247 @@ const groupMembers = [
 ];
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
+
+  const lineColor = isDark ? "border-white/12" : "border-[#233528]/18";
+  const mutedText = isDark ? "text-white/58" : "text-[#1b2a20]/68";
+  const kickerText = isDark ? "text-white/48" : "text-[#24362a]/58";
+  const mainText = isDark ? "text-white" : "text-[#111b15]";
+  const accentText = isDark ? "text-[#d9e6bd]" : "text-[#263e2b]";
+
   return (
-    <main className="relative isolate min-h-dvh overflow-hidden bg-[#f5f0e7] px-4 py-5 text-[#18261f] sm:px-6 lg:px-8">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(120,174,76,0.2),_transparent_35%),radial-gradient(circle_at_80%_15%,_rgba(223,177,96,0.18),_transparent_28%),linear-gradient(180deg,_#f9f7f2_0%,_#f5f0e7_52%,_#edf1e8_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(24,38,31,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(24,38,31,0.04)_1px,transparent_1px)] bg-[size:56px_56px] opacity-25" />
+    <main
+      className={`relative min-h-dvh overflow-hidden px-3 py-3 transition-colors duration-500 sm:px-5 sm:py-4 lg:px-6 ${
+        isDark ? "bg-[#080d09] text-[#f3f1e8]" : "bg-[#eef0e5] text-[#111b15]"
+      }`}
+    >
+      <img
+        src={backgroundImage}
+        alt="Folhagem de monstera em fundo escuro"
+        className={`fixed inset-0 h-full w-full scale-110 object-cover transition duration-500 ${
+          isDark ? "opacity-75 grayscale" : "opacity-78"
+        }`}
+      />
+      <div
+        className={`pointer-events-none fixed inset-0 transition duration-500 ${
+          isDark
+            ? "bg-[linear-gradient(90deg,rgba(5,9,6,0.9)_0%,rgba(5,9,6,0.36)_44%,rgba(5,9,6,0.82)_100%),linear-gradient(180deg,rgba(5,9,6,0.08)_0%,rgba(5,9,6,0.48)_38%,rgba(5,9,6,0.82)_68%,#030604_100%)]"
+            : "bg-[linear-gradient(90deg,rgba(238,240,229,0.56)_0%,rgba(238,240,229,0.12)_44%,rgba(238,240,229,0.5)_100%),linear-gradient(180deg,rgba(238,240,229,0.04)_0%,rgba(238,240,229,0.18)_46%,rgba(238,240,229,0.42)_78%,#eef0e5_100%)]"
+        }`}
+      />
+      <div
+        className={`pointer-events-none fixed inset-0 bg-[linear-gradient(currentColor_1px,transparent_1px),linear-gradient(90deg,currentColor_1px,transparent_1px)] bg-[size:72px_72px] opacity-20 ${
+          isDark ? "text-white/20" : "text-[#203226]/20"
+        }`}
+      />
+      <div
+        className={`pointer-events-none absolute inset-x-0 bottom-0 top-[88dvh] transition duration-500 ${
+          isDark
+            ? "bg-[linear-gradient(180deg,rgba(3,6,4,0)_0%,rgba(3,6,4,0.72)_10rem,rgba(3,6,4,0.9)_24rem,#020403_100%)]"
+            : "bg-[linear-gradient(180deg,rgba(238,240,229,0)_0%,rgba(238,240,229,0.34)_14rem,rgba(238,240,229,0.68)_34rem,#eef0e5_100%)]"
+        }`}
+      />
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        <nav className="global-panel flex flex-col gap-4 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-lime-500 via-emerald-500 to-teal-700 text-sm font-black text-white shadow-lg shadow-emerald-900/20">
-              SAF
-            </span>
-            <span>
-              <span className="block text-sm font-bold text-[#1f3127]">SAF Explorer</span>
-              <span className="block text-xs text-[#657268]">Catálogo agroflorestal</span>
-            </span>
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col pt-16 sm:pt-14">
+        <nav
+          className={`fixed left-3 right-3 top-3 z-50 mx-auto max-w-7xl border text-[0.64rem] uppercase tracking-[0.12em] shadow-[0_18px_60px_rgba(0,0,0,0.12)] backdrop-blur-md transition-colors duration-500 sm:left-5 sm:right-5 sm:top-4 lg:left-6 lg:right-6 ${
+            isDark
+              ? "border-white/18 bg-[linear-gradient(90deg,rgba(3,6,4,0.58),rgba(3,6,4,0.24),rgba(3,6,4,0.54))] text-white/78"
+              : "border-[#233528]/22 bg-[linear-gradient(90deg,rgba(238,240,229,0.88),rgba(238,240,229,0.58),rgba(238,240,229,0.86))] text-[#17241b]/82"
+          }`}
+        >
+          <div className="flex items-center justify-between">
+          <Link href="/" className="px-3 py-3 font-semibold">
+            SAF Explorer
           </Link>
-
-          <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center">
-            <Link
-              href="/especies"
-              className="rounded-full px-3 py-2 text-center text-sm font-semibold text-[#334a39] transition hover:bg-[#edf4e5]"
-            >
+          <div className="hidden items-center text-right md:flex">
+            <Link href="/especies" className={`border-l px-3 py-3 transition hover:bg-current/10 ${lineColor}`}>
               Plantas
             </Link>
-            <Link
-              href="/solo"
-              className="rounded-full px-3 py-2 text-center text-sm font-semibold text-[#334a39] transition hover:bg-[#edf4e5]"
-            >
+            <Link href="/solo" className={`border-l px-3 py-3 transition hover:bg-current/10 ${lineColor}`}>
               Solo
             </Link>
-            <Link
-              href="/admin"
-              className="rounded-full bg-[#27412f] px-3 py-2 text-center text-sm font-semibold text-white transition hover:bg-[#1b2e22]"
-            >
+            <Link href="/admin" className={`border-l px-3 py-3 transition hover:bg-current/10 ${lineColor}`}>
               Admin
             </Link>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className={`border-l px-3 py-3 text-left uppercase transition hover:bg-current/10 ${lineColor}`}
+              aria-label={`Ativar modo ${isDark ? "claro" : "escuro"}`}
+            >
+              {isDark ? "Claro" : "Escuro"}
+            </button>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
+            className={`flex items-center border-l px-3 py-3 md:hidden ${lineColor}`}
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            <span className="grid gap-1">
+              <span className={`block h-px w-5 ${isDark ? "bg-white/78" : "bg-[#17241b]/82"}`} />
+              <span className={`block h-px w-5 ${isDark ? "bg-white/78" : "bg-[#17241b]/82"}`} />
+              <span className={`block h-px w-5 ${isDark ? "bg-white/78" : "bg-[#17241b]/82"}`} />
+            </span>
+          </button>
+          </div>
+
+          {mobileMenuOpen ? (
+            <div className={`border-t md:hidden ${lineColor}`}>
+              <MobileNavLink href="/especies" label="Plantas" onClick={() => setMobileMenuOpen(false)} />
+              <MobileNavLink href="/solo" label="Solo" onClick={() => setMobileMenuOpen(false)} />
+              <MobileNavLink href="/admin" label="Admin" onClick={() => setMobileMenuOpen(false)} />
+              <button
+                type="button"
+                onClick={() => {
+                  toggleTheme();
+                  setMobileMenuOpen(false);
+                }}
+                className={`block w-full border-t px-3 py-3 text-left uppercase transition hover:bg-current/10 ${lineColor}`}
+              >
+                {isDark ? "Modo claro" : "Modo escuro"}
+              </button>
+            </div>
+          ) : null}
         </nav>
 
-        <section className="grid gap-5 lg:grid-cols-[1.12fr_0.88fr] lg:items-stretch">
-          <div className="global-panel flex flex-col justify-center p-5 sm:p-8 lg:min-h-[33rem] lg:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f7f6b] sm:tracking-[0.32em]">
-              Ferramenta digital para sistemas agroflorestais
+        <section className="relative min-h-[calc(100dvh-4.75rem)] sm:min-h-[calc(100dvh-5rem)]">
+          <div className="flex min-h-[calc(100dvh-4.75rem)] flex-col justify-end px-1 pb-6 pt-16 sm:min-h-[calc(100dvh-5rem)] sm:px-3 lg:px-4 lg:pb-8">
+            <p className={`mb-3 max-w-xs text-xs leading-5 sm:mb-4 ${isDark ? "text-white/76" : "text-[#111b15]/74"}`}>
+              Ferramenta digital para observar espécies, funções ecológicas e fertilidade do solo em sistemas
+              agroflorestais.
             </p>
-            <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-[#1d2d24] sm:text-5xl lg:text-6xl">
-              Organize plantas, funções ecológicas e leitura de solo em um só lugar.
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[#516156] sm:text-lg sm:leading-8">
-              Consulte espécies agroflorestais, relações entre plantas, nutrientes, disponibilidade por pH e sintomas
-              nutricionais com uma experiência clara para campo, estudo e gestão.
-            </p>
-
-            <div className="mt-7 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
-              <Link
-                href="/especies"
-                className="rounded-full bg-[#27412f] px-6 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-emerald-950/10 transition hover:bg-[#1b2e22]"
-              >
-                Explorar plantas
-              </Link>
-              <Link
-                href="/solo"
-                className="rounded-full border border-[#cfd8c7] bg-white/85 px-6 py-3 text-center text-sm font-semibold text-[#27412f] transition hover:bg-[#f7faf3]"
-              >
-                Ver química do solo
-              </Link>
-            </div>
-          </div>
-
-          <aside className="grid gap-4">
-            <div className="global-card overflow-hidden">
-              <div className="bg-[linear-gradient(135deg,_#27412f,_#5d7b1f)] p-5 text-white sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-lime-100">Visão geral</p>
-                <p className="mt-4 text-5xl font-black">SAF</p>
-                <p className="mt-2 max-w-sm text-sm leading-6 text-lime-50/90">
-                  Uma base viva para conectar biodiversidade, manejo e fertilidade do solo.
+            <div className="grid gap-7 lg:grid-cols-[1fr_20rem] lg:items-end">
+              <div>
+                <h1
+                  className={`max-w-5xl text-6xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-8xl lg:text-[8.8rem] ${mainText}`}
+                >
+                  SAF
+                  <span className={isDark ? "block text-white/78" : "block text-[#111b15]/72"}>Explorer</span>
+                </h1>
+                <p className={`mt-5 max-w-2xl text-base leading-7 sm:text-lg ${isDark ? "text-white/72" : "text-[#111b15]/72"}`}>
+                  Organize plantas, relações ecológicas, nutrientes e sintomas visuais em uma experiência limpa,
+                  precisa e pronta para consulta.
                 </p>
               </div>
-              <div className="grid gap-3 p-4 sm:grid-cols-3 sm:p-5 lg:grid-cols-1">
-                <MetricCard label="Catálogo" value="Base" text="Espécies organizadas para consulta pública." />
-                <MetricCard label="Manejo" value="pH" text="Leitura visual da disponibilidade de nutrientes." />
-                <MetricCard label="Relações" value="Rede" text="Associações entre plantas para planejar melhor." />
+
+              <div className="lg:pb-2">
+                <p className={`text-[0.65rem] font-semibold uppercase tracking-[0.24em] ${kickerText}`}>Acesso rápido</p>
+                <div className="mt-4 grid gap-3">
+                  <HomeAction accentText={accentText} href="/especies" isDark={isDark} label="Explorar plantas" />
+                  <HomeAction accentText={accentText} href="/solo" isDark={isDark} label="Ver química do solo" />
+                  <HomeAction accentText={accentText} href="/admin" isDark={isDark} label="Área administrativa" />
+                </div>
               </div>
             </div>
-          </aside>
+
+            <div className={`mt-9 flex flex-wrap gap-x-8 gap-y-3 border-t pt-4 ${lineColor}`}>
+              {["Catálogo", "Manejo", "Relações", "Sintomas", "pH"].map((item) => (
+                <p key={item} className={`text-[0.64rem] font-semibold uppercase tracking-[0.18em] ${kickerText}`}>
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
         </section>
 
-        <section className="grid gap-4 md:grid-cols-3">
+        <section className={`grid gap-x-10 gap-y-8 border-t py-12 md:grid-cols-3 lg:py-16 ${lineColor}`}>
           <HomeModule
-            href="/especies"
+            accentText={accentText}
             eyebrow="Catálogo"
+            href="/especies"
+            kickerText={kickerText}
+            mainText={mainText}
+            mutedText={mutedText}
             title="Espécies agroflorestais"
             text="Pesquise por nome, filtre por função e abra detalhes com categoria, explicação e relações."
           />
           <HomeModule
-            href="/solo"
+            accentText={accentText}
             eyebrow="Solo"
+            href="/solo"
+            kickerText={kickerText}
+            mainText={mainText}
+            mutedText={mutedText}
             title="Nutrientes e pH"
             text="Compare disponibilidade, fontes naturais e sintomas de deficiência em um painel visual."
           />
           <HomeModule
-            href="/admin"
+            accentText={accentText}
             eyebrow="Gestão"
+            href="/admin"
+            kickerText={kickerText}
+            mainText={mainText}
+            mutedText={mutedText}
             title="Área administrativa"
             text="Atualize plantas, categorias, funções, relações e dados do solo em uma interface organizada."
           />
         </section>
 
-        <section className="global-panel mb-5 p-5 sm:p-6">
-          <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f7f6b]">Fluxo de uso</p>
-              <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">
-                Da consulta rápida ao manejo informado.
-              </h2>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <ProcessStep number="01" title="Encontrar" text="Localize uma planta ou sintoma." />
-              <ProcessStep number="02" title="Entender" text="Veja funções, nutrientes e relações." />
-              <ProcessStep number="03" title="Decidir" text="Use os dados para orientar o manejo." />
-            </div>
+        <section className={`grid gap-x-12 gap-y-8 border-t py-12 lg:grid-cols-[0.85fr_1.15fr] lg:py-16 ${lineColor}`}>
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${kickerText}`}>Fluxo de uso</p>
+            <h2 className={`mt-3 max-w-xl text-3xl font-semibold tracking-[-0.04em] sm:text-4xl ${mainText}`}>
+              Da consulta rápida ao manejo informado.
+            </h2>
+          </div>
+          <div className="grid gap-7 sm:grid-cols-3">
+            <ProcessStep
+              accentText={accentText}
+              lineColor={lineColor}
+              mainText={mainText}
+              mutedText={mutedText}
+              number="01"
+              title="Encontrar"
+              text="Localize uma planta ou sintoma."
+            />
+            <ProcessStep
+              accentText={accentText}
+              lineColor={lineColor}
+              mainText={mainText}
+              mutedText={mutedText}
+              number="02"
+              title="Entender"
+              text="Veja funções, nutrientes e relações."
+            />
+            <ProcessStep
+              accentText={accentText}
+              lineColor={lineColor}
+              mainText={mainText}
+              mutedText={mutedText}
+              number="03"
+              title="Decidir"
+              text="Use os dados para orientar o manejo."
+            />
           </div>
         </section>
 
-        <section className="global-panel mb-5 p-5 sm:p-6">
+        <section className={`border-t py-12 lg:py-16 ${lineColor}`}>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f7f6b]">Equipe</p>
-              <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">
-                Integrantes do grupo
-              </h2>
+              <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${kickerText}`}>Equipe</p>
+              <h2 className={`mt-2 text-3xl font-semibold tracking-[-0.04em] ${mainText}`}>Integrantes do grupo</h2>
             </div>
-            <p className="max-w-xl text-sm leading-6 text-[#657268]">
-              Nomes, vínculos institucionais e contatos dos responsáveis pelo desenvolvimento e organização do
-              SAF Explorer.
+            <p className={`max-w-xl text-sm leading-6 ${mutedText}`}>
+              Nomes, vínculos institucionais e contatos dos responsáveis pelo desenvolvimento e organização do SAF
+              Explorer.
             </p>
           </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-2">
+          <div className="mt-8 grid gap-x-10 gap-y-7 md:grid-cols-2">
             {groupMembers.map((member) => (
-              <MemberCard key={member.name} {...member} />
+              <MemberCard
+                key={member.name}
+                {...member}
+                accentText={accentText}
+                lineColor={lineColor}
+                mainText={mainText}
+                mutedText={mutedText}
+              />
             ))}
           </div>
         </section>
@@ -172,66 +279,122 @@ export default function Home() {
   );
 }
 
-function MetricCard({ label, text, value }: { label: string; text: string; value: string }) {
-  return (
-    <div className="rounded-2xl bg-[#f8faf5] p-4">
-      <p className="text-2xl font-bold text-[#1f3127]">{value}</p>
-      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#738072]">{label}</p>
-      <p className="mt-2 text-sm leading-6 text-[#657268]">{text}</p>
-    </div>
-  );
-}
-
-function HomeModule({
-  eyebrow,
+function HomeAction({
+  accentText,
   href,
-  text,
-  title,
+  isDark,
+  label,
 }: {
-  eyebrow: string;
+  accentText: string;
   href: string;
-  text: string;
-  title: string;
+  isDark: boolean;
+  label: string;
 }) {
   return (
     <Link
       href={href}
-      className="global-card group block p-5 transition hover:-translate-y-0.5 hover:bg-[#edf4e5] hover:shadow-[0_24px_60px_rgba(40,52,38,0.12)] sm:p-6"
+      className={`group flex items-center justify-between border-b py-3 text-sm font-semibold transition hover:translate-x-1 ${
+        isDark ? "border-white/20 hover:border-white/60" : "border-[#233528]/22 hover:border-[#233528]/60"
+      } ${accentText}`}
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#738072]">{eyebrow}</p>
-      <h2 className="mt-3 text-xl font-semibold text-[#1f3127]">{title}</h2>
-      <p className="mt-2 text-sm leading-7 text-[#657268]">{text}</p>
-      <span className="mt-5 inline-flex text-sm font-semibold text-[#36543d] transition group-hover:translate-x-1">
+      {label}
+      <span aria-hidden="true">-&gt;</span>
+    </Link>
+  );
+}
+
+function MobileNavLink({ href, label, onClick }: { href: string; label: string; onClick: () => void }) {
+  return (
+    <Link href={href} onClick={onClick} className="block border-t border-current/15 px-3 py-3 transition hover:bg-current/10">
+      {label}
+    </Link>
+  );
+}
+
+function HomeModule({
+  accentText,
+  eyebrow,
+  href,
+  kickerText,
+  mainText,
+  mutedText,
+  text,
+  title,
+}: {
+  accentText: string;
+  eyebrow: string;
+  href: string;
+  kickerText: string;
+  mainText: string;
+  mutedText: string;
+  text: string;
+  title: string;
+}) {
+  return (
+    <Link href={href} className="group block">
+      <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${kickerText}`}>{eyebrow}</p>
+      <h2 className={`mt-4 text-2xl font-semibold tracking-[-0.03em] ${mainText}`}>{title}</h2>
+      <p className={`mt-3 text-sm leading-7 ${mutedText}`}>{text}</p>
+      <span className={`mt-6 inline-flex border-b pb-1 text-sm font-semibold transition group-hover:translate-x-1 ${accentText}`}>
         Acessar
       </span>
     </Link>
   );
 }
 
-function ProcessStep({ number, text, title }: { number: string; text: string; title: string }) {
+function ProcessStep({
+  accentText,
+  lineColor,
+  mainText,
+  mutedText,
+  number,
+  text,
+  title,
+}: {
+  accentText: string;
+  lineColor: string;
+  mainText: string;
+  mutedText: string;
+  number: string;
+  text: string;
+  title: string;
+}) {
   return (
-    <div className="rounded-2xl border border-[#dfe5d9] bg-white/85 p-4">
-      <p className="text-xs font-black text-[#5d7b1f]">{number}</p>
-      <h3 className="mt-2 font-semibold text-[#1f3127]">{title}</h3>
-      <p className="mt-1 text-sm leading-6 text-[#657268]">{text}</p>
+    <div className={`border-t pt-4 ${lineColor}`}>
+      <p className={`text-xs font-black ${accentText}`}>{number}</p>
+      <h3 className={`mt-8 text-lg font-semibold ${mainText}`}>{title}</h3>
+      <p className={`mt-2 text-sm leading-6 ${mutedText}`}>{text}</p>
     </div>
   );
 }
 
-function MemberCard({ affiliation, email, name }: { affiliation: string; email: string; name: string }) {
+function MemberCard({
+  accentText,
+  affiliation,
+  email,
+  lineColor,
+  mainText,
+  mutedText,
+  name,
+}: {
+  accentText: string;
+  affiliation: string;
+  email: string;
+  lineColor: string;
+  mainText: string;
+  mutedText: string;
+  name: string;
+}) {
   return (
-    <article className="rounded-2xl border border-[#dfe5d9] bg-white/85 p-4">
-      <p className="text-lg font-semibold text-[#1f3127]">{name}</p>
-      <p className="mt-2 text-sm leading-6 text-[#657268]">{affiliation}</p>
+    <article className={`border-t pt-4 ${lineColor}`}>
+      <p className={`text-lg font-semibold ${mainText}`}>{name}</p>
+      <p className={`mt-2 text-sm leading-6 ${mutedText}`}>{affiliation}</p>
       {email ? (
-        <a
-          href={`mailto:${email}`}
-          className="mt-3 inline-flex text-sm font-semibold text-[#36543d] transition hover:text-[#1f3127]"
-        >
+        <a href={`mailto:${email}`} className={`mt-3 inline-flex border-b pb-1 text-sm font-semibold transition ${accentText}`}>
           {email}
         </a>
       ) : (
-        <p className="mt-3 text-sm font-semibold text-[#8a7560]">Email a informar</p>
+        <p className={`mt-3 text-sm font-semibold ${mutedText}`}>Email a informar</p>
       )}
     </article>
   );

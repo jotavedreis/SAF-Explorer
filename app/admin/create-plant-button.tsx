@@ -21,7 +21,7 @@ export function CreatePlantButton({ categories }: CreatePlantButtonProps) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="rounded-full bg-[#27412f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#1b2e22]"
+        className="bg-[#12251a] px-5 py-2 text-sm font-semibold text-[#f3f1e8] transition hover:bg-[#223a2a]"
       >
         Criar nova planta
       </button>

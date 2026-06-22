@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/browser";
 
-export function LogoutButton() {
+export function LogoutButton({ className }: { className?: string }) {
   const router = useRouter();
   const supabase = createClient();
 
@@ -17,7 +17,10 @@ export function LogoutButton() {
     <button
       type="button"
       onClick={handleLogout}
-      className="w-full cursor-pointer rounded-full bg-[#1f3327] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#15261d] sm:w-auto"
+      className={
+        className ??
+        "w-full cursor-pointer bg-[#12251a] px-4 py-2 text-sm font-semibold text-[#f3f1e8] transition hover:bg-[#223a2a] sm:w-auto"
+      }
     >
       Sair
     </button>
