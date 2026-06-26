@@ -13,11 +13,21 @@ export type CreateSpeciesActionState = {
 };
 
 type SpeciesFormFields = {
-  categoriaId: string;
+  nome_popular: string;
+  nome_cientifico: string;
+  categoria_id: string;
+  grupo_funcional: string;
+  foto_url: string;
+  altura: string;
+  espacamento_planta: string;
+  tempo_producao: string;
+  estabelecimento_planta: string;
+  solo_planta: string;
+  ph_planta: string;
   explicacao: string;
-  fotoUrl: string;
-  nomeCientifico: string;
-  nomePopular: string;
+  ciclagem_sistema: string;
+  fornece_planta: string;
+  demanda_planta: string;
 };
 
 const simpleNameSchema = z.object({
@@ -86,22 +96,32 @@ export async function createSpeciesAction(
   }
 
   const supabase = createAdminClient();
-  const fotoUrl = await resolveSpeciesPhotoUrl(supabase, formData);
+  const foto_url = await resolveSpeciesPhotoUrl(supabase, formData);
 
-  if (fotoUrl instanceof Error) {
+  if (foto_url instanceof Error) {
     return {
       status: "error",
-      message: fotoUrl.message,
+      message: foto_url.message,
       fields,
     };
   }
 
   const { error } = await supabase.from("species").insert({
-    nome_popular: parsed.data.nomePopular,
-    nome_cientifico: parsed.data.nomeCientifico,
-    categoria_id: parsed.data.categoriaId,
-    foto_url: resolvePhotoValue(fotoUrl, parsed.data.fotoUrl),
-    explicacao: parsed.data.explicacao,
+    nome_popular: parsed.data.nome_popular,
+    nome_cientifico: parsed.data.nome_cientifico,
+    categoria_id: parsed.data.categoria_id,
+    grupo_funcional: parsed.data.grupo_funcional,
+    foto_url: resolvePhotoValue(foto_url, parsed.data.foto_url),
+    altura: parsed.data.altura,
+    espacamento_planta: parsed.data.espacamento_planta,
+    tempo_producao: parsed.data.tempo_producao,
+    estabelecimento_planta: parsed.data.estabelecimento_planta,
+    solo_planta: parsed.data.solo_planta,
+    ph_planta: parsed.data.ph_planta,
+    explicacao:parsed.data.explicacao,
+    ciclagem_sistema: parsed.data.ciclagem_sistema,
+    fornece_planta: parsed.data.fornece_planta,
+    demanda_planta: parsed.data.demanda_planta,
   });
 
   if (error) {
@@ -146,12 +166,12 @@ export async function updateSpeciesAction(
   }
 
   const supabase = createAdminClient();
-  const fotoUrl = await resolveSpeciesPhotoUrl(supabase, formData);
+  const foto_url = await resolveSpeciesPhotoUrl(supabase, formData);
 
-  if (fotoUrl instanceof Error) {
+  if (foto_url instanceof Error) {
     return {
       status: "error",
-      message: fotoUrl.message,
+      message: foto_url.message,
       fields,
     };
   }
@@ -159,11 +179,21 @@ export async function updateSpeciesAction(
   const { error } = await supabase
     .from("species")
     .update({
-      nome_popular: parsed.data.nomePopular,
-      nome_cientifico: parsed.data.nomeCientifico,
-      categoria_id: parsed.data.categoriaId,
-      foto_url: resolvePhotoValue(fotoUrl, parsed.data.fotoUrl),
-      explicacao: parsed.data.explicacao,
+      nome_popular: parsed.data.nome_popular,
+      nome_cientifico: parsed.data.nome_cientifico,
+      categoria_id: parsed.data.categoria_id,
+      grupo_funcional: parsed.data.grupo_funcional,
+      foto_url: resolvePhotoValue(foto_url, parsed.data.foto_url),
+      altura: parsed.data.altura,
+      espacamento_planta: parsed.data.espacamento_planta,
+      tempo_producao: parsed.data.tempo_producao,
+      estabelecimento_planta: parsed.data.estabelecimento_planta,
+      solo_planta: parsed.data.solo_planta,
+      ph_planta: parsed.data.ph_planta,
+      explicacao:parsed.data.explicacao,
+      ciclagem_sistema: parsed.data.ciclagem_sistema,
+      fornece_planta: parsed.data.fornece_planta,
+      demanda_planta: parsed.data.demanda_planta,
     })
     .eq("id", speciesId.data);
 
@@ -449,11 +479,21 @@ async function deleteById(
 
 function parseSpeciesFormData(formData: FormData): SpeciesFormFields {
   return {
-    nomePopular: getStringFormValue(formData, "nomePopular"),
-    nomeCientifico: getStringFormValue(formData, "nomeCientifico"),
-    categoriaId: getStringFormValue(formData, "categoriaId"),
-    fotoUrl: getStringFormValue(formData, "fotoUrl"),
+    nome_popular: getStringFormValue(formData, "nome_popular"),
+    nome_cientifico: getStringFormValue(formData, "nome_cientifico"),
+    categoria_id: getStringFormValue(formData, "categoria_id"),
+    grupo_funcional: getStringFormValue(formData, "grupo_funcional"),
+    foto_url: getStringFormValue(formData, "foto_url"),
     explicacao: getStringFormValue(formData, "explicacao"),
+    altura: getStringFormValue(formData, "altura"),
+    ciclagem_sistema: getStringFormValue(formData, "ciclagem_sistema"),
+    demanda_planta: getStringFormValue(formData, "demanda_planta"),
+    espacamento_planta: getStringFormValue(formData, "espacamento_planta"),
+    fornece_planta: getStringFormValue(formData, "fornece_planta"),
+    tempo_producao: getStringFormValue(formData, "tempo_producao"),
+    ph_planta: getStringFormValue(formData, "ph_planta"),
+    estabelecimento_planta: getStringFormValue(formData, "estabelecimento_planta"),
+    solo_planta: getStringFormValue(formData, "solo_planta"),
   };
 }
 

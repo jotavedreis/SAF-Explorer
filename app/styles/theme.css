@@ -13,7 +13,7 @@
   --theme-page: #eef0e5;
   --theme-ink: #111b15;
   --theme-muted: rgba(27, 42, 32, 0.68);
-  --theme-kicker: rgba(36, 54, 42, 0.58);
+  --theme-kicker: rgb(31, 107, 56);
   --theme-panel: rgba(244, 245, 235, 0.9);
   --theme-panel-solid: #f4f5eb;
   --theme-panel-soft: rgba(238, 243, 232, 0.74);
@@ -38,7 +38,7 @@
   --theme-page: #080d09;
   --theme-ink: #f3f1e8;
   --theme-muted: rgba(255, 255, 255, 0.62);
-  --theme-kicker: rgba(255, 255, 255, 0.48);
+  --theme-kicker: rgba(255, 255, 255, 0.62);
   --theme-panel: rgba(10, 15, 11, 0.76);
   --theme-panel-solid: #101611;
   --theme-panel-soft: rgba(255, 255, 255, 0.06);
@@ -240,9 +240,10 @@
 .theme-kicker {
   color: var(--theme-kicker) !important;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 900;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
+  text-transform: uppercase;  
+   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.158);
 }
 
 .theme-meta {
@@ -421,8 +422,11 @@
   color: var(--theme-ink) !important;
   line-height: 1.7;
   margin-top: 0.25rem;
+  /*
   max-height: 16rem;
+  */
   overflow-y: auto;
+  text-align: justify;
 }
 
 .species-relation-button {

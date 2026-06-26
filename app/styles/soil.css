@@ -46,6 +46,13 @@
     gap: 0.75rem;
   }
 
+  .soil-chip p {
+  text-align: left;
+  hyphens: auto; /* opcional: hifenização automática para quebras mais naturais */
+  overflow-wrap: break-word;
+  font-size: 0.875rem;
+}
+
   .soil-chip {
     border-radius: 0;
     background: #f8faf5;

@@ -20,8 +20,18 @@ type SpeciesRow = {
   nome_popular: string;
   nome_cientifico: string | null;
   categoria_id: number;
+  grupo_funcional: string | null;
   foto_url: string | null;
+  altura: string | null;
+  espacamento_planta: string | null;
+  tempo_producao: string | null;
+  estabelecimento_planta: string | null;
+  solo_planta: string | null;
+  ph_planta: string | null;
   explicacao: string | null;
+  ciclagem_sistema: string | null;
+  fornece_planta: string | null;
+  demanda_planta: string | null;
 };
 
 type PlantRowProps = {
