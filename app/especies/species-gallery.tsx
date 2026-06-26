@@ -277,37 +277,37 @@ function SpeciesDetailModal({
           <div className="species-modal-info">
             <InfoBox label="Categoria" value={categoryName} />
             <div className="species-modal-box">
-              <p className="theme-kicker func">Funções da planta 🌱</p>
+              <p className="theme-kicker func">Funções da planta </p>
               <div className="mt-2">
                 <FunctionBadges functions={functions} />
               </div>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Altura 🌲​</p>
+              <p className="theme-kicker">Altura​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.altura ?? "Sem altura cadastrada."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Espaçamento 🌿​</p>
+              <p className="theme-kicker">Espaçamento​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.espacamento_planta ?? "Sem espaçamento cadastrado."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Tempo de produção ⏱️​</p>
+              <p className="theme-kicker">Tempo de produção​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.tempo_producao ?? "Sem tempo de produção cadastrado."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Estabelecimento ⛰️​</p>
+              <p className="theme-kicker">Estabelecimento</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.estabelecimento_planta ?? "Sem estabelecimento de produção cadastrado."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Solo ⛰️​</p>
+              <p className="theme-kicker">Solo​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.solo_planta ?? "Sem solo cadastrado."}
               </p>
@@ -319,25 +319,25 @@ function SpeciesDetailModal({
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">O que esta planta faz? 🍃​</p>
+              <p className="theme-kicker">O que esta planta faz?​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.explicacao ?? "Sem descricao cadastrada."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Ciclagem no Sistema 🍃​</p>
+              <p className="theme-kicker">Ciclagem no Sistema​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.ciclagem_sistema ?? "Sem ciclagem cadastrada."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">O que esta planta fornece? 🌿</p>
+              <p className="theme-kicker">O que esta planta fornece?</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.fornece_planta ?? "Sem informacao cadastrada."}
               </p>
             </div>
             <div className="species-modal-box">
-              <p className="theme-kicker">Demanda 💧​</p>
+              <p className="theme-kicker">Demanda​</p>
               <p className="species-modal-scroll-text">
                 {selectedSpecies.demanda_planta ?? "Sem demanda cadastrada."}
               </p>
