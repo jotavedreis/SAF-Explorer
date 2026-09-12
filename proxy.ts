@@ -2,13 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
 function getRequiredEnv(name: string) {
-  const value = process.env[name]?.trim();
-
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-
-  return value;
+  return process.env[name]?.trim() ?? "";
 }
 
 export async function proxy(request: NextRequest) {

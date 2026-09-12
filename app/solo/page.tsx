@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { HeaderActionsMenu } from "../header-actions-menu";
 import { SoilDashboard } from "./soil-dashboard";
 
+export const dynamic = "force-dynamic";
+
 type NutrientRow = {
   id: number;
   simbolo: string;

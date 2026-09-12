@@ -2,19 +2,21 @@ import {
   createCategoryAction,
   createFunctionAction,
   createNutrientAction,
-  createPhAvailabilityAction,
   createPhPointAction,
   createRelationTypeAction,
-  createSpeciesFunctionAction,
-  createSpeciesRelationAction,
-  createVisualSymptomAction,
   deleteCategoryAction,
   deleteFunctionAction,
   deleteNutrientAction,
   deletePhPointAction,
   deleteRelationTypeAction,
-  deleteVisualSymptomAction,
 } from "./actions";
+import {
+  SpeciesFunctionForm,
+  SpeciesRelationForm,
+  PhAvailabilityForm,
+  VisualSymptomForm,
+} from "./admin-select-forms";
+import { NutrientList } from "./nutrient-editor";
 
 type SpeciesOption = {
   id: number;
@@ -151,20 +153,17 @@ export function AdminDataForms({
         </AdminDetails>
 
         <AdminDetails accent="03" title="Funções das espécies" description="Associe uma planta a uma função.">
-          <form action={createSpeciesFunctionAction} className="grid gap-3">
-            <AdminSelect label="Espécie" name="speciesId" options={species.map(toOption)} />
-            <AdminSelect label="Função" name="funcaoId" options={functions.map(toOption)} />
-            <SubmitButton label="Vincular função" />
-          </form>
+          <SpeciesFunctionForm
+            species={species}
+            functions={functions}
+          />
         </AdminDetails>
 
         <AdminDetails accent="04" title="Relações entre espécies" description="Ex.: Gliricídia fornece nitrogênio para Açaí.">
-          <form action={createSpeciesRelationAction} className="grid gap-3">
-            <AdminSelect label="Espécie origem" name="fromSpeciesId" options={species.map(toOption)} />
-            <AdminSelect label="Tipo de relação" name="tipoRelacaoId" options={relationTypes.map(toOption)} />
-            <AdminSelect label="Espécie destino" name="toSpeciesId" options={species.map(toOption)} />
-            <SubmitButton label="Criar relação" />
-          </form>
+          <SpeciesRelationForm
+            species={species}
+            relationTypes={relationTypes}
+          />
         </AdminDetails>
 
         <AdminDetails accent="05" title="Nutrientes" description="Dados exibidos no módulo Química do Solo.">
@@ -178,12 +177,7 @@ export function AdminDataForms({
             <AdminTextarea label="Fontes naturais" name="fontesNaturais" />
             <SubmitButton label="Salvar nutriente" />
           </form>
-          <ManageableList
-            deleteAction={deleteNutrientAction}
-            emptyText="Nenhum nutriente cadastrado."
-            items={nutrients.map((item) => ({ id: item.id, label: `${item.nome} (${item.simbolo})` }))}
-            title="Nutrientes cadastrados"
-          />
+          <NutrientList nutrients={nutrients} />
         </AdminDetails>
 
         <AdminDetails accent="06" title="Pontos de pH" description="Referencias para a barra interativa de fertilidade.">
@@ -206,33 +200,16 @@ export function AdminDataForms({
         </AdminDetails>
 
         <AdminDetails accent="07" title="Disponibilidade por pH" description="Percentual de cada nutriente em cada ponto de pH.">
-          <form action={createPhAvailabilityAction} className="grid gap-3">
-            <AdminSelect
-              label="Ponto de pH"
-              name="phPontoId"
-              options={phPoints.map((item) => ({
-                id: item.id,
-                nome: `pH ${Number(item.ph_valor).toFixed(2).replace(".", ",")}`,
-              }))}
-            />
-            <AdminSelect label="Nutriente" name="nutrienteId" options={nutrients.map(toOption)} />
-            <AdminInput label="Disponibilidade (%)" name="disponibilidadePct" placeholder="85" required type="number" />
-            <AdminTextarea label="Descrição qualitativa" name="descricao" />
-            <SubmitButton label="Salvar disponibilidade" />
-          </form>
+          <PhAvailabilityForm
+            phPoints={phPoints}
+            nutrients={nutrients.map(toOption)}
+          />
         </AdminDetails>
 
         <AdminDetails accent="08" title="Diagnóstico visual" description="Sintomas observados e nutriente mais provável.">
-          <form action={createVisualSymptomAction} className="grid gap-3">
-            <AdminInput label="Sintoma" name="descricao" placeholder="Folhas amareladas" required />
-            <AdminSelect label="Nutriente associado" name="nutrienteId" options={nutrients.map(toOption)} />
-            <SubmitButton label="Salvar sintoma" />
-          </form>
-          <ManageableList
-            deleteAction={deleteVisualSymptomAction}
-            emptyText="Nenhum sintoma cadastrado."
-            items={symptoms.map((item) => ({ id: item.id, label: item.descricao }))}
-            title="Sintomas cadastrados"
+          <VisualSymptomForm
+            nutrients={nutrients.map(toOption)}
+            symptoms={symptoms}
           />
         </AdminDetails>
       </div>

@@ -348,6 +348,37 @@ export async function createNutrientAction(formData: FormData) {
   revalidatePath("/solo");
 }
 
+export async function updateNutrientAction(formData: FormData) {
+  const nutrientIdSchema = z.object({
+    id: bigIntIdSchema,
+  });
+
+  const parsed = nutrientSchema.merge(nutrientIdSchema).safeParse({
+    id: formData.get("id"),
+    simbolo: formData.get("simbolo"),
+    nome: formData.get("nome"),
+    funcaoNaPlanta: formData.get("funcaoNaPlanta"),
+    sintomasDeficiencia: formData.get("sintomasDeficiencia"),
+    fontesNaturais: formData.get("fontesNaturais"),
+  });
+
+  if (!parsed.success) {
+    return;
+  }
+
+  const supabase = createAdminClient();
+  await supabase.from("nutriente").update({
+    simbolo: parsed.data.simbolo,
+    nome: parsed.data.nome,
+    funcao_na_planta: resolveOptionalText(parsed.data.funcaoNaPlanta),
+    sintomas_deficiencia: resolveOptionalText(parsed.data.sintomasDeficiencia),
+    fontes_naturais: resolveOptionalText(parsed.data.fontesNaturais),
+  }).eq("id", parsed.data.id);
+
+  revalidatePath("/admin");
+  revalidatePath("/solo");
+}
+
 export async function createPhPointAction(formData: FormData) {
   const parsed = phPointSchema.safeParse({
     phValor: formData.get("phValor"),

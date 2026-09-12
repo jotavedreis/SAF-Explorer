@@ -141,8 +141,7 @@ export default function Home() {
         <section className="relative min-h-[calc(100dvh-4.75rem)] sm:min-h-[calc(100dvh-5rem)]">
           <div className="flex min-h-[calc(100dvh-4.75rem)] flex-col justify-end px-1 pb-6 pt-16 sm:min-h-[calc(100dvh-5rem)] sm:px-3 lg:px-4 lg:pb-8">
             <p className={`mb-3 max-w-xs text-xs leading-5 sm:mb-4 ${isDark ? "text-white/76" : "text-[#111b15]/74"}`}>
-              Ferramenta digital para observar espécies, funções ecológicas e fertilidade do solo em sistemas
-              agroflorestais.
+              Ferramenta digital participativa para sistematizar informações sobre espécies, funções ecológicas e fertilidade do solo em sistemas agroflorestais.
             </p>
             <div className="grid gap-7 lg:grid-cols-[1fr_20rem] lg:items-end">
               <div>
