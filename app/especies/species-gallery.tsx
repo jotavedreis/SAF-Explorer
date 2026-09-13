@@ -116,7 +116,7 @@ export function SpeciesGallery({
             <input
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Ex.: Acai, Gliricidia, Ipe..."
+              placeholder="Ex.: Açaizeiro, Bananeira, Cacaueiro..."
               className="theme-field"
             />
           </label>
@@ -128,7 +128,7 @@ export function SpeciesGallery({
               onChange={(event) => setSelectedFunctionId(event.target.value)}
               className="theme-field"
             >
-              <option value="all">Todas as funcoes</option>
+              <option value="all">Todas as funções</option>
               {functions.map((funcao) => (
                 <option key={funcao.id} value={funcao.id}>
                   {funcao.nome}

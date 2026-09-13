@@ -225,6 +225,7 @@
     border-color 150ms ease,
     box-shadow 150ms ease,
     background-color 150ms ease;
+  cursor: pointer;
 }
 
 .theme-field:focus {
@@ -235,6 +236,14 @@
 .theme-field option {
   background: var(--theme-panel-solid);
   color: var(--theme-ink);
+}
+
+select.theme-field {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%), linear-gradient(135deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%);
+  background-position: calc(100% - 1rem) 50%, calc(100% - 0.75rem) 50%;
+  background-size: 0.5rem 0.5rem;
+  background-repeat: no-repeat;
 }
 
 .theme-kicker {

@@ -71,7 +71,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
         {nutrients.length === 0 ? (
           <EmptyState text="Nenhum nutriente cadastrado ainda." />
         ) : (
@@ -238,7 +238,7 @@ function SoilTextBlock({ label, value }: { label: string; value: string | null }
   return (
     <div className="soil-chip">
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">{label}</p>
-      <p className="mt-1 text-sm leading-6 text-[#22342a]">{value || "Ainda não cadastrado."}</p>
+      <p className="mt-1 text-sm leading-6 text-[#22342a] text-justify">{value || "Ainda não cadastrado."}</p>
     </div>
   );
 }

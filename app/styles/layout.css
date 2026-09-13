@@ -7,13 +7,31 @@
   }
 
   .page-shell--forest {
-    background: var(--theme-page);
+    background:
+      linear-gradient(var(--theme-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--theme-grid-line) 1px, transparent 1px),
+      radial-gradient(circle at 18% 10%, rgba(91, 126, 56, 0.24), transparent 28%),
+      var(--theme-page);
+    background-size: 72px 72px;
     color: var(--theme-ink);
+  }
+
+  :root[data-theme="dark"] .page-shell--forest {
+    background:
+      linear-gradient(var(--theme-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--theme-grid-line) 1px, transparent 1px),
+      radial-gradient(circle at 18% 10%, rgba(91, 126, 56, 0.24), transparent 28%),
+      var(--theme-page);
+    background-size: 72px 72px;
   }
 
   .page-shell--catalog {
     background: var(--theme-page);
     color: var(--theme-ink);
+  }
+
+  :root[data-theme="dark"] .page-shell--catalog {
+    background: var(--theme-page);
   }
 
   .page-bg-grid {
@@ -129,6 +147,8 @@
     background: var(--theme-panel);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
     backdrop-filter: blur(14px);
+
+    
   }
 
   .global-card {

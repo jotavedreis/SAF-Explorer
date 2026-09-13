@@ -132,13 +132,8 @@ export default async function AdminPage() {
     .slice(0, 3);
 
   return (
-    <div className="admin-theme-page relative z-[100] min-h-screen overflow-hidden bg-[#eef0e5] px-3 py-4 text-[#111b15] sm:px-6 sm:py-6 lg:px-8">
-      <img
-        src={backgroundImage}
-        alt=""
-        className="fixed inset-0 h-full w-full scale-110 object-cover opacity-25 blur-md"
-      />
-      <div className="admin-bg-overlay pointer-events-none fixed inset-0 bg-[linear-gradient(90deg,rgba(238,240,229,0.92),rgba(238,240,229,0.74),rgba(238,240,229,0.94)),linear-gradient(180deg,rgba(238,240,229,0.2),#eef0e5_72%)]" />
+    <div className="admin-theme-page relative z-[100] min-h-screen overflow-hidden px-3 py-4 text-[#111b15] sm:px-6 sm:py-6 lg:px-8">
+      <div className="admin-bg-overlay pointer-events-none fixed inset-0 bg-[linear-gradient(90deg,rgba(238,240,229,0.6),rgba(238,240,229,0.3),rgba(238,240,229,0.6)),linear-gradient(180deg,rgba(238,240,229,0.1),#eef0e5_72%)]" />
       <div className="admin-bg-grid pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(32,50,38,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(32,50,38,0.045)_1px,transparent_1px)] bg-[size:72px_72px] opacity-50" />
 
       <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-5 sm:gap-6">
@@ -146,7 +141,7 @@ export default async function AdminPage() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-[#12251a] text-sm font-black text-[#e7f2cf] shadow-[0_18px_45px_rgba(18,37,26,0.2)] sm:h-14 sm:w-14">
-                SAF
+                 <img src="../images/icon.png" alt="Logo" className="h-6 w-6 object-contain" />
               </div>
               <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#24362a]/58">
