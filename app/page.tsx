@@ -47,16 +47,14 @@ export default function Home() {
     >
       <img
         src={backgroundImage}
-        alt="Folhagem de monstera em fundo escuro"
-        className={`fixed inset-0 h-full w-full scale-110 object-cover transition duration-500 ${
-          isDark ? "opacity-75 grayscale" : "opacity-78"
-        }`}
+        alt="Palmeira em fundo natural"
+        className="fixed inset-0 h-full w-full scale-110 object-cover blur-[2px] transition duration-500"
       />
       <div
         className={`pointer-events-none fixed inset-0 transition duration-500 ${
           isDark
             ? "bg-[linear-gradient(90deg,rgba(5,9,6,0.9)_0%,rgba(5,9,6,0.36)_44%,rgba(5,9,6,0.82)_100%),linear-gradient(180deg,rgba(5,9,6,0.08)_0%,rgba(5,9,6,0.48)_38%,rgba(5,9,6,0.82)_68%,#030604_100%)]"
-            : "bg-[linear-gradient(90deg,rgba(238,240,229,0.56)_0%,rgba(238,240,229,0.12)_44%,rgba(238,240,229,0.5)_100%),linear-gradient(180deg,rgba(238,240,229,0.04)_0%,rgba(238,240,229,0.18)_46%,rgba(238,240,229,0.42)_78%,#eef0e5_100%)]"
+            : "bg-[linear-gradient(90deg,rgba(238,240,229,0.4)_0%,rgba(238,240,229,0.1)_44%,rgba(238,240,229,0.36)_100%),linear-gradient(180deg,rgba(238,240,229,0.02)_0%,rgba(238,240,229,0.18)_30%,rgba(238,240,229,0.45)_55%,#eef0e5_75%)]"
         }`}
       />
       <div
@@ -81,9 +79,9 @@ export default function Home() {
           }`}
         >
           <div className="flex items-center justify-between">
-          <Link href="/" className="px-3 py-3 font-semibold">
-            SAF Explorer
-          </Link>
+            <Link href="/" className="flex items-center gap-2 px-10 py-3 font-semibold">
+              <img src="/images/icon.png" alt="Logo" className="h-6 w-6 object-contain" />
+            </Link>
           <div className="hidden items-center text-right md:flex">
             <Link href="/especies" className={`border-l px-3 py-3 transition hover:bg-current/10 ${lineColor}`}>
               Plantas
@@ -97,10 +95,15 @@ export default function Home() {
             <button
               type="button"
               onClick={toggleTheme}
-              className={`border-l px-3 py-3 text-left uppercase transition hover:bg-current/10 ${lineColor}`}
+              className={`flex items-center gap-2 border-l px-3 py-3 text-left uppercase transition hover:bg-current/10 ${lineColor}`}
               aria-label={`Ativar modo ${isDark ? "claro" : "escuro"}`}
             >
-              {isDark ? "Claro" : "Escuro"}
+              <img
+                src={isDark ? "/images/icones/sun_icon.png" : "/images/icones/moon_icon.png"}
+                alt=""
+                className="h-5 w-5 object-contain"
+              />
+              <span>{isDark ? "Modo claro" : "Modo escuro"}</span>
             </button>
           </div>
 
@@ -130,9 +133,9 @@ export default function Home() {
                   toggleTheme();
                   setMobileMenuOpen(false);
                 }}
-                className={`block w-full border-t px-3 py-3 text-left uppercase transition hover:bg-current/10 ${lineColor}`}
+                className={`block w-full border-t px-3 py-3 text-center transition hover:bg-current/10 ${lineColor}`}
               >
-                {isDark ? "Modo claro" : "Modo escuro"}
+                {isDark ? "☀️ Modo claro" : "🌙 Modo escuro"}
               </button>
             </div>
           ) : null}
@@ -140,20 +143,16 @@ export default function Home() {
 
         <section className="relative min-h-[calc(100dvh-4.75rem)] sm:min-h-[calc(100dvh-5rem)]">
           <div className="flex min-h-[calc(100dvh-4.75rem)] flex-col justify-end px-1 pb-6 pt-16 sm:min-h-[calc(100dvh-5rem)] sm:px-3 lg:px-4 lg:pb-8">
-            <p className={`mb-3 max-w-xs text-xs leading-5 sm:mb-4 ${isDark ? "text-white/76" : "text-[#111b15]/74"}`}>
-              Ferramenta digital participativa para sistematizar informações sobre espécies, funções ecológicas e fertilidade do solo em sistemas agroflorestais.
-            </p>
             <div className="grid gap-7 lg:grid-cols-[1fr_20rem] lg:items-end">
               <div>
                 <h1
-                  className={`max-w-5xl text-6xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-8xl lg:text-[8.8rem] ${mainText}`}
+                  className={`max-w-5xl text-5xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-7xl lg:text-[6.5rem] ${mainText}`}
                 >
                   SAF
                   <span className={isDark ? "block text-white/78" : "block text-[#111b15]/72"}>Explorer</span>
                 </h1>
                 <p className={`mt-5 max-w-2xl text-base leading-7 sm:text-lg ${isDark ? "text-white/72" : "text-[#111b15]/72"}`}>
-                  Organize plantas, relações ecológicas, nutrientes e sintomas visuais em uma experiência limpa,
-                  precisa e pronta para consulta.
+                  Ferramenta digital participativa para sistematizar informações sobre espécies, funções ecológicas e fertilidade do solo em sistemas agroflorestais.
                 </p>
               </div>
 
