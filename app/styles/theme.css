@@ -182,7 +182,8 @@
 
 :root[data-theme="dark"] .theme-readable-surface,
 :root[data-theme="dark"] .soil-chip,
-:root[data-theme="dark"] .availability-card {
+:root[data-theme="dark"] .availability-card,
+:root[data-theme="dark"] .educational-column {
   border-color: var(--theme-line) !important;
   background: rgba(255, 255, 255, 0.06) !important;
   color: var(--theme-ink) !important;
@@ -190,7 +191,8 @@
 
 :root[data-theme="dark"] .theme-readable-surface :is(p, span, h2, h3),
 :root[data-theme="dark"] .soil-chip :is(p, span),
-:root[data-theme="dark"] .availability-card :is(p) {
+:root[data-theme="dark"] .availability-card :is(p),
+:root[data-theme="dark"] .educational-column :is(p, h3) {
   color: var(--theme-ink) !important;
 }
 

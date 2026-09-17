@@ -97,6 +97,8 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         )}
       </section>
 
+      <EducationalCard />
+
       <section className="ph-stage ph-stage--compact p-3 sm:p-5">
         <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -231,6 +233,46 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         </div>
       </section>
     </div>
+  );
+}
+
+function EducationalCard() {
+  return (
+    <section className="educational-banner p-3 sm:p-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-3 sm:mb-4 text-center">
+          <h2 className="text-lg sm:text-2xl font-bold text-[#1f3127]">
+            Presença ≠ Disponibilidade ≠ Absorção
+          </h2>
+          <p className="mt-1 text-sm sm:text-base text-[#657268]">
+            Etapas químicas e biológicas envolvidas na disponibilidade e absorção de nutrientes no sistema solo-planta.
+          </p>
+        </div>
+        <div className="grid gap-3 sm:gap-4 md:grid-cols-3">
+          <div className="educational-column theme-readable-surface bg-[#f8faf5] p-3 sm:p-4 rounded-2xl border border-[#d4dcc8]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d7b1f] mb-2">PRESENÇA</p>
+            <h3 className="text-base sm:text-lg font-bold text-[#1f3127] mb-2">No solo</h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              O elemento está presente no solo, associado às frações mineral ou orgânica. Para que possa ser aproveitado pelas plantas, é necessário que passe por processos que favoreçam sua disponibilização.
+            </p>
+          </div>
+          <div className="educational-column theme-readable-surface bg-[#f8faf5] p-3 sm:p-4 rounded-2xl border border-[#d4dcc8]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d7b1f] mb-2">DISPONIBILIDADE</p>
+            <h3 className="text-base sm:text-lg font-bold text-[#1f3127] mb-2">No solo e na solução</h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              O nutriente está em uma forma que pode ser acessada pelas raízes. Fatores como pH, capacidade de troca catiônica (CTC), matéria orgânica e interações entre nutrientes influenciam sua disponibilidade.
+            </p>
+          </div>
+          <div className="educational-column theme-readable-surface bg-[#f8faf5] p-3 sm:p-4 rounded-2xl border border-[#d4dcc8]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d7b1f] mb-2">ABSORÇÃO</p>
+            <h3 className="text-base sm:text-lg font-bold text-[#1f3127] mb-2">Na planta</h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              O nutriente disponível pode ser absorvido pelo sistema radicular e, posteriormente, transportado e utilizado pela planta.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

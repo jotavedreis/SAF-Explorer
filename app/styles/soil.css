@@ -191,4 +191,100 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+
+  .educational-banner {
+    border-radius: 0;
+    border: 1px solid var(--theme-line);
+    background:
+      radial-gradient(circle at 16% 12%, rgba(93, 123, 31, 0.12), transparent 32%),
+      var(--theme-panel);
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
+  }
+
+  .educational-column {
+    border-radius: 0;
+    background: var(--theme-panel-soft);
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+
+  .educational-column:hover {
+    border-color: var(--theme-kicker);
+    box-shadow: 0 10px 26px rgba(93, 123, 31, 0.12);
+  }
+
+  @media (min-width: 640px) {
+    .soil-hero-card,
+    .nutrient-card,
+    .ph-stage,
+    .diagnosis-card,
+    .educational-banner {
+      border-radius: 1rem;
+    }
+
+    .nutrient-symbol {
+      height: 4.5rem;
+      width: 4.5rem;
+      border-radius: 0;
+      font-size: 1.7rem;
+    }
+
+    .diagnosis-result {
+      border-radius: 1.5rem;
+    }
+
+    .ph-gradient {
+      height: 1rem;
+    }
+
+    .ph-marker {
+      height: 2rem;
+      width: 2rem;
+      border-width: 4px;
+    }
+
+    .availability-card {
+      border-radius: 0;
+      padding: 1rem;
+    }
+
+    .availability-meter {
+      height: 0.7rem;
+    }
+
+    .condition-panel {
+      display: block;
+    }
+
+    .condition-line {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .educational-column {
+      border-radius: 1rem;
+    }
+  }
+
+  :root[data-theme="dark"] .educational-banner {
+    background:
+      radial-gradient(circle at 16% 12%, rgba(93, 123, 31, 0.18), transparent 32%),
+      var(--theme-panel);
+    border-color: var(--theme-line);
+  }
+
+  :root[data-theme="dark"] .educational-column {
+    background: var(--theme-panel-soft);
+    border-color: var(--theme-line);
+  }
+
+  :root[data-theme="dark"] .educational-column h3 {
+    color: var(--theme-ink);
+  }
+
+  :root[data-theme="dark"] .educational-column p {
+    color: var(--theme-ink);
+  }
 }

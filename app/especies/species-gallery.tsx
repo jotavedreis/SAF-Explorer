@@ -122,7 +122,7 @@ export function SpeciesGallery({
           </label>
 
           <label className="theme-label space-y-2">
-            <span>Filtrar por funcao</span>
+            <span>Filtrar por função</span>
             <select
               value={selectedFunctionId}
               onChange={(event) => setSelectedFunctionId(event.target.value)}
