@@ -160,7 +160,9 @@ export function SpeciesGallery({
                     alt={`Foto de ${item.nome_popular}`}
                     className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                   />
-                ) : null}
+                ) : (
+                  <div className="species-card-empty-media">Sem foto cadastrada</div>
+                )}
               </div>
               <div className="species-card-body">
                 <div>

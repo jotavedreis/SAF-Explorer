@@ -212,6 +212,11 @@
   background: rgba(255, 255, 255, 0.14) !important;
 }
 
+:root[data-theme="dark"] .theme-readable-surface .nutrient-interaction-badge {
+  background: rgba(188, 220, 136, 0.24) !important;
+  color: #dff7b8 !important;
+}
+
 .theme-label {
   color: var(--theme-muted);
   display: block;
@@ -337,6 +342,18 @@ select.theme-field {
 .species-card-media {
   height: 10rem;
   background: linear-gradient(135deg, #9bb36f, #5f7d2a);
+}
+
+.species-card-empty-media {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .species-card-body {
@@ -519,6 +536,14 @@ select.theme-field {
   background: rgba(10, 15, 11, 0.88) !important;
 }
 
+:root[data-theme="dark"] .species-card-media {
+  background: linear-gradient(135deg, #17251a, #2b4931);
+}
+
+:root[data-theme="dark"] .species-card-empty-media {
+  color: var(--theme-muted) !important;
+}
+
 :root[data-theme="dark"] .species-modal-box,
 :root[data-theme="dark"] .species-relation-button,
 :root[data-theme="dark"] .species-modal-media {
@@ -527,6 +552,22 @@ select.theme-field {
 
 .theme-dropdown-menu {
   background: rgba(244, 245, 235, 0.88);
+}
+
+.admin-modal {
+  background: var(--theme-panel-solid);
+  color: var(--theme-ink);
+}
+
+.admin-modal :is(input:not([type="hidden"]), select, textarea) {
+  border-color: var(--theme-line);
+  background: var(--theme-panel-soft);
+  color: var(--theme-ink);
+}
+
+.admin-modal select option {
+  background: var(--theme-panel-solid);
+  color: var(--theme-ink);
 }
 
 :root[data-theme="dark"] .theme-dropdown-menu {
@@ -631,4 +672,86 @@ select.theme-field {
 
 :root[data-theme="dark"] .admin-theme-page .admin-edit-button:hover {
   background: rgba(188, 220, 136, 0.26) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager .admin-manageable-list,
+:root[data-theme="dark"] .nutrient-interaction-manager .admin-list-item {
+  border-color: var(--theme-line) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager .admin-manageable-list :is(p, span),
+:root[data-theme="dark"] .nutrient-interaction-manager .admin-list-item :is(p, span) {
+  color: var(--theme-ink) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager :is(input, select, textarea) {
+  border-color: var(--theme-line) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--theme-ink) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager fieldset > div {
+  border-color: var(--theme-line) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager fieldset label:hover {
+  border-color: var(--theme-line) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager fieldset label:has(input:checked) {
+  border-color: rgba(188, 220, 136, 0.6) !important;
+  background: rgba(188, 220, 136, 0.16) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager fieldset label :is(span) {
+  color: var(--theme-ink) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager select option {
+  background: var(--theme-panel-solid) !important;
+  color: var(--theme-ink) !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager .admin-edit-button {
+  background: rgba(188, 220, 136, 0.18) !important;
+  color: #dff7b8 !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager .admin-remove-button {
+  background: rgba(160, 52, 61, 0.2) !important;
+  color: #ffd8dc !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager [role="alert"],
+:root[data-theme="dark"] .admin-modal [role="alert"] {
+  background: rgba(160, 52, 61, 0.2) !important;
+  color: #ffd8dc !important;
+}
+
+:root[data-theme="dark"] .nutrient-interaction-manager [role="status"],
+:root[data-theme="dark"] .admin-modal [role="status"] {
+  background: rgba(188, 220, 136, 0.16) !important;
+  color: #dff7b8 !important;
+}
+
+:root[data-theme="dark"] .admin-modal .admin-danger-box {
+  background: rgba(160, 52, 61, 0.2) !important;
+  color: #ffd8dc !important;
+}
+
+:root[data-theme="dark"] .admin-modal .admin-danger-box :is(p, span),
+:root[data-theme="dark"] .admin-modal .admin-secondary-button {
+  color: var(--theme-ink) !important;
+}
+
+:root[data-theme="dark"] .admin-modal .admin-secondary-button {
+  border-color: var(--theme-line) !important;
+  background: var(--theme-panel-soft) !important;
+}
+
+:root[data-theme="dark"] .admin-modal .admin-secondary-button:hover {
+  background: var(--theme-panel) !important;
 }

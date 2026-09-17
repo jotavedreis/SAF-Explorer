@@ -32,24 +32,48 @@ type VisualSymptomRow = {
   nutriente_id: number;
 };
 
+type NutrientInteractionRow = {
+  id: number;
+  source_nutrient_id: number;
+  target_nutrient_id: number;
+  relation_type: string;
+  mechanism: string;
+  description: string | null;
+  source_nutrient?: NutrientRow;
+  target_nutrient?: NutrientRow;
+};
+
 type SoilDashboardProps = {
   availability: PhAvailabilityRow[];
   nutrients: NutrientRow[];
   phPoints: PhPointRow[];
   symptoms: VisualSymptomRow[];
+  interactions: NutrientInteractionRow[];
 };
 
-export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: SoilDashboardProps) {
+export function SoilDashboard({ availability, nutrients, phPoints, symptoms, interactions }: SoilDashboardProps) {
   const minPh = phPoints[0]?.ph_valor ?? 4.5;
   const maxPh = phPoints[phPoints.length - 1]?.ph_valor ?? 6;
   const [selectedPh, setSelectedPh] = useState(minPh);
   const [selectedSymptomId, setSelectedSymptomId] = useState(symptoms[0]?.id ? String(symptoms[0].id) : "");
+  const [selectedInteractionSourceId, setSelectedInteractionSourceId] = useState(
+    interactions[0]?.source_nutrient_id ? String(interactions[0].source_nutrient_id) : ""
+  );
 
   const nutrientMap = useMemo(() => new Map(nutrients.map((nutrient) => [nutrient.id, nutrient])), [nutrients]);
   const selectedSymptom = symptoms.find((symptom) => String(symptom.id) === selectedSymptomId) ?? null;
   const likelyNutrient = selectedSymptom ? nutrientMap.get(selectedSymptom.nutriente_id) : null;
   const currentPhContext = interpolatePhContext(phPoints, selectedPh);
   const phMarkerPosition = getPhMarkerPosition(minPh, maxPh, selectedPh);
+  const interactionSources = nutrients.filter((nutrient) =>
+    interactions.some((interaction) => interaction.source_nutrient_id === nutrient.id)
+  );
+  const selectedInteractionSource = interactionSources.find(
+    (nutrient) => String(nutrient.id) === selectedInteractionSourceId
+  );
+  const selectedInteractions = interactions.filter(
+    (interaction) => interaction.source_nutrient_id === selectedInteractionSource?.id
+  );
 
   return (
     <div className="mt-5 grid gap-5 sm:mt-6 sm:gap-6">
@@ -63,7 +87,7 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
               de cada nutriente, depois compara a disponibilidade no pH escolhido.
             </p>
           </div>
-          <div className="theme-readable-surface grid grid-cols-1 gap-2 bg-white/70 p-3 min-[380px]:grid-cols-3">
+          <div className="theme-readable-surface grid grid-cols-3 items-stretch gap-2 bg-white/70 p-3">
             <VisualMetric label="Nutrientes" value={String(nutrients.length)} />
             <VisualMetric label="Pontos pH" value={String(phPoints.length)} />
             <VisualMetric label="Sintomas" value={String(symptoms.length)} />
@@ -190,6 +214,13 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
 
       <NutrientCycleCard />
 
+      <NutrientInteractionsCard
+        interactions={selectedInteractions}
+        interactionSources={interactionSources}
+        selectedSourceId={selectedInteractionSourceId}
+        onSourceChange={setSelectedInteractionSourceId}
+      />
+
       <section className="diagnosis-card p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
@@ -237,6 +268,73 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         </div>
       </section>
     </div>
+  );
+}
+
+function NutrientInteractionsCard({
+  interactionSources,
+  interactions,
+  onSourceChange,
+  selectedSourceId,
+}: {
+  interactionSources: NutrientRow[];
+  interactions: NutrientInteractionRow[];
+  onSourceChange: (sourceId: string) => void;
+  selectedSourceId: string;
+}) {
+  return (
+    <section className="diagnosis-card p-4 sm:p-5">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#738072]">Antagonismo nutricional</p>
+          <h2 className="mt-2 text-2xl font-semibold text-[#1f3127] sm:text-3xl">Relações de competição e bloqueio</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-7 text-[#657268]">
+            Selecione um nutriente em excesso para visualizar os nutrientes afetados e o mecanismo registrado.
+          </p>
+        </div>
+        <label className="w-full space-y-2 text-sm font-medium text-[#405046] sm:max-w-xs">
+          <span>Nutriente em excesso</span>
+          <select
+            value={selectedSourceId}
+            onChange={(event) => onSourceChange(event.target.value)}
+            disabled={interactionSources.length === 0}
+            className="w-full rounded-2xl border border-[#d4dcc8] bg-[#f9fbf6] px-4 py-3 outline-none transition focus:border-[#97b178] focus:ring-2 focus:ring-[#c6d7ae] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {interactionSources.length === 0 ? <option value="">Nenhuma relação cadastrada</option> : null}
+            {interactionSources.map((nutrient) => (
+              <option key={nutrient.id} value={nutrient.id}>
+                {nutrient.nome} ({nutrient.simbolo})
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {interactions.length === 0 ? (
+        <EmptyState text="Nenhuma relação nutricional cadastrada ainda." />
+      ) : (
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {interactions.map((interaction) => (
+            <article key={interaction.id} className="theme-readable-surface bg-[#f8faf5] p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#738072]">Nutriente afetado</p>
+                  <h3 className="mt-1 text-lg font-semibold text-[#1f3127]">
+                    {interaction.target_nutrient?.nome ?? `Nutriente ${interaction.target_nutrient_id}`}
+                    {interaction.target_nutrient?.simbolo ? ` (${interaction.target_nutrient.simbolo})` : ""}
+                  </h3>
+                </div>
+                <span className="nutrient-interaction-badge rounded-full bg-[#e5efd4] px-3 py-1 text-xs font-semibold text-[#45601e]">
+                  {interaction.relation_type}
+                </span>
+              </div>
+              <p className="mt-3 text-sm font-medium text-[#405046]">{interaction.mechanism}</p>
+              {interaction.description ? <p className="mt-2 text-sm leading-7 text-[#536158]">{interaction.description}</p> : null}
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -468,9 +566,9 @@ function SoilTextBlock({ label, value }: { label: string; value: string | null }
 
 function VisualMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="theme-readable-surface bg-[#f8faf5] px-3 py-4 text-center">
-      <p className="text-2xl font-bold text-[#1f3127]">{value}</p>
-      <p className="mt-1 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#738072]">{label}</p>
+    <div className="theme-readable-surface flex min-h-24 min-w-0 flex-col items-center justify-center bg-[#f8faf5] px-2 py-3 text-center sm:px-3 sm:py-4">
+      <p className="text-2xl font-bold leading-none text-[#1f3127]">{value}</p>
+      <p className="mt-2 text-[0.6rem] font-semibold uppercase leading-tight tracking-[0.12em] text-[#738072] sm:text-[0.65rem] sm:tracking-[0.16em]">{label}</p>
     </div>
   );
 }

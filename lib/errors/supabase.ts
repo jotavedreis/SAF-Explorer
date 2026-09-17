@@ -15,8 +15,8 @@ export function getFriendlySupabaseErrorMessage(error: unknown) {
   }
 
   if (supabaseError?.code === "42P01") {
-    return "Tabela species nao encontrada. Crie a tabela 'species' no Supabase para ativar o cadastro.";
+    return "A tabela necessária não foi encontrada no Supabase. Execute o schema/migration do projeto e tente novamente.";
   }
 
-  return "Ocorreu um erro inesperado. Tente novamente.";
+  return supabaseError?.message ? `Não foi possível concluir a operação: ${supabaseError.message}` : "Ocorreu um erro inesperado. Tente novamente.";
 }

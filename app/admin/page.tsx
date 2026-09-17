@@ -6,8 +6,6 @@ import { PlantRow } from "./plant-row";
 
 export const dynamic = "force-dynamic";
 
-const backgroundImage = "/images/palmeira-planta.jpg";
-
 type SpeciesRow = {
   id: number;
   nome_popular: string;
@@ -43,6 +41,13 @@ type SpeciesFunctionRow = {
   funcao_id: number;
 };
 
+type SpeciesRelationRow = {
+  id: number;
+  from_species_id: number;
+  to_species_id: number;
+  tipo_relacao_id: number;
+};
+
 type RelationTypeRow = {
   id: number;
   nome: string;
@@ -65,6 +70,15 @@ type VisualSymptomRow = {
   descricao: string;
 };
 
+type NutrientInteractionRow = {
+  id: number;
+  source_nutrient_id: number;
+  target_nutrient_id: number;
+  relation_type: string;
+  mechanism: string;
+  description: string | null;
+};
+
 export default async function AdminPage() {
   const supabase = createAdminClient();
 
@@ -73,10 +87,12 @@ export default async function AdminPage() {
     categoriesResult,
     functionsResult,
     speciesFunctionsResult,
+    speciesRelationsResult,
     relationTypesResult,
     nutrientsResult,
     phPointsResult,
     symptomsResult,
+    interactionsResult,
   ] = await Promise.all([
     supabase
       .from("species")
@@ -85,20 +101,29 @@ export default async function AdminPage() {
     supabase.from("categoria").select("id, nome").order("nome", { ascending: true }),
     supabase.from("funcao").select("id, nome").order("nome", { ascending: true }),
     supabase.from("species_functions").select("species_id, funcao_id"),
+    supabase.from("species_relations").select("id, from_species_id, to_species_id, tipo_relacao_id").order("id", { ascending: true }),
     supabase.from("tipo_relacao").select("id, nome, nome_reverso").order("nome", { ascending: true }),
     supabase.from("nutriente").select("id, simbolo, nome").order("id", { ascending: true }),
     supabase.from("ph_ponto").select("id, ph_valor").order("ph_valor", { ascending: true }),
     supabase.from("sintoma_visual").select("id, descricao").order("descricao", { ascending: true }),
+    supabase.from("nutrient_interactions").select("*").order("id", { ascending: true }),
   ]);
 
   const plants: SpeciesRow[] = speciesResult.data ?? [];
   const categories: CategoryRow[] = categoriesResult.data ?? [];
   const functions: FunctionRow[] = functionsResult.data ?? [];
   const speciesFunctions: SpeciesFunctionRow[] = speciesFunctionsResult.data ?? [];
+  const speciesRelations: SpeciesRelationRow[] = speciesRelationsResult.data ?? [];
   const relationTypes: RelationTypeRow[] = relationTypesResult.data ?? [];
   const nutrients: NutrientRow[] = nutrientsResult.data ?? [];
   const phPoints: PhPointRow[] = phPointsResult.data ?? [];
   const symptoms: VisualSymptomRow[] = symptomsResult.data ?? [];
+  const nutrientMap = new Map(nutrients.map((nutrient) => [nutrient.id, nutrient]));
+  const interactions: NutrientInteractionRow[] = (interactionsResult.data ?? []).map((interaction) => ({
+    ...interaction,
+    source_nutrient: nutrientMap.get(interaction.source_nutrient_id),
+    target_nutrient: nutrientMap.get(interaction.target_nutrient_id),
+  }));
   const categoryMap = new Map(categories.map((category) => [category.id, category.nome]));
   const functionMap = new Map(functions.map((funcao) => [funcao.id, funcao.nome]));
   const speciesFunctionMap = speciesFunctions.reduce<Map<number, FunctionRow[]>>((acc, item) => {
@@ -116,10 +141,12 @@ export default async function AdminPage() {
       categoriesResult.error ||
       functionsResult.error ||
       speciesFunctionsResult.error ||
+      speciesRelationsResult.error ||
       relationTypesResult.error ||
       nutrientsResult.error ||
       phPointsResult.error ||
-      symptomsResult.error
+      symptomsResult.error ||
+      interactionsResult.error
   );
 
   const categoryCount = plants.reduce<Map<number, number>>((acc, plant) => {
@@ -213,7 +240,9 @@ export default async function AdminPage() {
                 id: plant.id,
                 nome_popular: plant.nome_popular,
               }))}
+              speciesRelations={speciesRelations}
               symptoms={symptoms}
+              interactions={interactions}
             />
 
             <section className="border border-[#243528]/16 bg-[#f4f5eb]/82 p-4 shadow-[0_18px_60px_rgba(17,27,21,0.08)] backdrop-blur-md sm:p-5">

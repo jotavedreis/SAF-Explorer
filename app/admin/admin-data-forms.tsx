@@ -6,7 +6,6 @@ import {
   createRelationTypeAction,
   deleteCategoryAction,
   deleteFunctionAction,
-  deleteNutrientAction,
   deletePhPointAction,
   deleteRelationTypeAction,
 } from "./actions";
@@ -17,6 +16,7 @@ import {
   VisualSymptomForm,
 } from "./admin-select-forms";
 import { NutrientList } from "./nutrient-editor";
+import { NutrientInteractionManager } from "./nutrient-interaction-manager";
 
 type SpeciesOption = {
   id: number;
@@ -55,6 +55,24 @@ type VisualSymptomOption = {
   descricao: string;
 };
 
+type SpeciesRelationRow = {
+  id: number;
+  from_species_id: number;
+  to_species_id: number;
+  tipo_relacao_id: number;
+};
+
+type NutrientInteractionRow = {
+  id: number;
+  source_nutrient_id: number;
+  target_nutrient_id: number;
+  relation_type: string;
+  mechanism: string;
+  description: string | null;
+  source_nutrient?: NutrientOption;
+  target_nutrient?: NutrientOption;
+};
+
 type AdminDataFormsProps = {
   categories: CategoryOption[];
   functions: FunctionOption[];
@@ -62,7 +80,9 @@ type AdminDataFormsProps = {
   phPoints: PhPointOption[];
   relationTypes: RelationTypeOption[];
   species: SpeciesOption[];
+  speciesRelations: SpeciesRelationRow[];
   symptoms: VisualSymptomOption[];
+  interactions: NutrientInteractionRow[];
 };
 
 export function AdminDataForms({
@@ -72,7 +92,9 @@ export function AdminDataForms({
   phPoints,
   relationTypes,
   species,
+  speciesRelations,
   symptoms,
+  interactions,
 }: AdminDataFormsProps) {
   const modules = [
     { label: "Categorias", value: categories.length },
@@ -163,6 +185,7 @@ export function AdminDataForms({
           <SpeciesRelationForm
             species={species}
             relationTypes={relationTypes}
+            relations={speciesRelations}
           />
         </AdminDetails>
 
@@ -211,6 +234,10 @@ export function AdminDataForms({
             nutrients={nutrients.map(toOption)}
             symptoms={symptoms}
           />
+        </AdminDetails>
+
+        <AdminDetails accent="09" title="Interações e Antagonismo Nutricional" description="Relações onde um nutriente em excesso inibe a absorção de outros.">
+          <NutrientInteractionManager interactions={interactions} nutrients={nutrients} />
         </AdminDetails>
       </div>
     </section>
@@ -357,36 +384,6 @@ function AdminTextarea({ label, name }: { label: string; name: string }) {
         rows={3}
         className="w-full resize-y border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
       />
-    </label>
-  );
-}
-
-function AdminSelect({
-  label,
-  name,
-  options,
-}: {
-  label: string;
-  name: string;
-  options: Array<{ id: number; nome: string }>;
-}) {
-  return (
-    <label className="space-y-1 text-sm text-[#405046]">
-      <span>{label}</span>
-      <select
-        name={name}
-        required
-        className="w-full border border-[#243528]/18 bg-[#f7f8ef]/80 px-3 py-2 outline-none transition focus:border-[#263e2b] focus:ring-2 focus:ring-[#9bad8f]/40"
-      >
-        <option value="" disabled>
-          Selecione
-        </option>
-        {options.map((option) => (
-          <option key={option.id} value={option.id}>
-            {option.nome}
-          </option>
-        ))}
-      </select>
     </label>
   );
 }

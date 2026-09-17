@@ -4,12 +4,17 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getFriendlySupabaseErrorMessage } from "@/lib/errors/supabase";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { bigIntIdSchema, createSpeciesSchema } from "@/lib/validation";
+import { bigIntIdSchema, createSpeciesSchema, createInteractionSchema } from "@/lib/validation";
 
 export type CreateSpeciesActionState = {
   status: "idle" | "success" | "error";
   message: string;
   fields?: SpeciesFormFields;
+};
+
+export type NutrientInteractionActionState = {
+  status: "idle" | "success" | "error";
+  message: string;
 };
 
 type SpeciesFormFields = {
@@ -51,6 +56,10 @@ const speciesRelationSchema = z.object({
   tipoRelacaoId: bigIntIdSchema,
 }).refine((data) => data.fromSpeciesId !== data.toSpeciesId, {
   message: "Escolha duas espécies diferentes.",
+});
+
+const speciesRelationIdSchema = z.object({
+  id: bigIntIdSchema,
 });
 
 const nutrientSchema = z.object({
@@ -308,16 +317,73 @@ export async function createSpeciesRelationAction(formData: FormData) {
   });
 
   if (!parsed.success) {
-    return;
+    return { status: "error", message: "Verifique os dados da relação entre espécies." } as const;
   }
 
   const supabase = createAdminClient();
-  await supabase.from("species_relations").insert({
+  const { error } = await supabase.from("species_relations").insert({
     from_species_id: parsed.data.fromSpeciesId,
     to_species_id: parsed.data.toSpeciesId,
     tipo_relacao_id: parsed.data.tipoRelacaoId,
   });
+
+  if (error) {
+    return { status: "error", message: getFriendlySupabaseErrorMessage(error) } as const;
+  }
+
   revalidatePath("/admin");
+  revalidatePath("/especies");
+  return { status: "success", message: "Relação entre espécies criada." } as const;
+}
+
+export async function updateSpeciesRelationAction(formData: FormData) {
+  const parsedId = speciesRelationIdSchema.safeParse({ id: formData.get("id") });
+  const parsed = speciesRelationSchema.safeParse({
+    fromSpeciesId: formData.get("fromSpeciesId"),
+    toSpeciesId: formData.get("toSpeciesId"),
+    tipoRelacaoId: formData.get("tipoRelacaoId"),
+  });
+
+  if (!parsedId.success || !parsed.success) {
+    return { status: "error", message: "Verifique os dados da relação entre espécies." } as const;
+  }
+
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("species_relations")
+    .update({
+      from_species_id: parsed.data.fromSpeciesId,
+      to_species_id: parsed.data.toSpeciesId,
+      tipo_relacao_id: parsed.data.tipoRelacaoId,
+    })
+    .eq("id", parsedId.data.id);
+
+  if (error) {
+    return { status: "error", message: getFriendlySupabaseErrorMessage(error) } as const;
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/especies");
+  return { status: "success", message: "Relação entre espécies atualizada." } as const;
+}
+
+export async function deleteSpeciesRelationAction(formData: FormData) {
+  const parsed = speciesRelationIdSchema.safeParse({ id: formData.get("id") });
+
+  if (!parsed.success) {
+    return { status: "error", message: "A relação selecionada é inválida." } as const;
+  }
+
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("species_relations").delete().eq("id", parsed.data.id);
+
+  if (error) {
+    return { status: "error", message: getFriendlySupabaseErrorMessage(error) } as const;
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/especies");
+  return { status: "success", message: "Relação entre espécies excluída." } as const;
 }
 
 export async function createNutrientAction(formData: FormData) {
@@ -564,4 +630,153 @@ function resolvePhotoValue(uploadedPhotoUrl: string | null, typedPhotoUrl: unkno
 function resolveOptionalText(value: string | undefined) {
   const candidate = value?.trim() ?? "";
   return candidate ? candidate : null;
+}
+
+function interactionError(message: string): NutrientInteractionActionState {
+  return { status: "error", message };
+}
+
+function interactionSuccess(message: string): NutrientInteractionActionState {
+  return { status: "success", message };
+}
+
+function parseInteractionFormData(formData: FormData) {
+  return createInteractionSchema.safeParse({
+    sourceNutrientId: formData.get("sourceNutrientId"),
+    targetNutrientIds: formData.getAll("targetNutrientIds").map(Number),
+    relationType: formData.get("relationType"),
+    mechanism: formData.get("mechanism"),
+    description: formData.get("description"),
+  });
+}
+
+export async function createNutrientInteractionAction(
+  _previousState: NutrientInteractionActionState,
+  formData: FormData
+): Promise<NutrientInteractionActionState> {
+  const parsed = parseInteractionFormData(formData);
+
+  if (!parsed.success) {
+    return interactionError(parsed.error.issues[0]?.message ?? "Verifique os dados da interação.");
+  }
+
+  const supabase = createAdminClient();
+
+  const { error } = await supabase.from("nutrient_interactions").upsert(
+    parsed.data.targetNutrientIds.map((targetId) => ({
+      source_nutrient_id: parsed.data.sourceNutrientId,
+      target_nutrient_id: targetId,
+      relation_type: parsed.data.relationType,
+      mechanism: parsed.data.mechanism,
+      description: resolveOptionalText(parsed.data.description),
+    })),
+    { onConflict: "source_nutrient_id,target_nutrient_id,mechanism" }
+  );
+
+  if (error) {
+    return interactionError(getFriendlySupabaseErrorMessage(error));
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/solo");
+  return interactionSuccess("Interação cadastrada com sucesso.");
+}
+
+export async function updateNutrientInteractionAction(
+  _previousState: NutrientInteractionActionState,
+  formData: FormData
+): Promise<NutrientInteractionActionState> {
+  const interactionId = bigIntIdSchema.safeParse(formData.get("interactionId"));
+  const parsed = parseInteractionFormData(formData);
+
+  if (!interactionId.success) {
+    return interactionError("A interação selecionada é inválida.");
+  }
+
+  if (!parsed.success) {
+    return interactionError(parsed.error.issues[0]?.message ?? "Verifique os dados da interação.");
+  }
+
+  const supabase = createAdminClient();
+  const { data: currentInteraction, error: currentInteractionError } = await supabase
+    .from("nutrient_interactions")
+    .select("source_nutrient_id, relation_type, mechanism")
+    .eq("id", interactionId.data)
+    .single();
+
+  if (currentInteractionError || !currentInteraction) {
+    return interactionError(getFriendlySupabaseErrorMessage(currentInteractionError));
+  }
+
+  const [firstTargetId, ...additionalTargetIds] = parsed.data.targetNutrientIds;
+  const { error: updateError } = await supabase
+    .from("nutrient_interactions")
+    .update({
+      source_nutrient_id: parsed.data.sourceNutrientId,
+      target_nutrient_id: firstTargetId,
+      relation_type: parsed.data.relationType,
+      mechanism: parsed.data.mechanism,
+      description: resolveOptionalText(parsed.data.description),
+    })
+    .eq("id", interactionId.data);
+
+  if (updateError) {
+    return interactionError(getFriendlySupabaseErrorMessage(updateError));
+  }
+
+  const { error: staleTargetsError } = await supabase
+    .from("nutrient_interactions")
+    .delete()
+    .eq("source_nutrient_id", currentInteraction.source_nutrient_id)
+    .eq("relation_type", currentInteraction.relation_type)
+    .eq("mechanism", currentInteraction.mechanism)
+    .neq("id", interactionId.data)
+    .not("target_nutrient_id", "in", `(${parsed.data.targetNutrientIds.join(",")})`);
+
+  if (staleTargetsError) {
+    return interactionError(getFriendlySupabaseErrorMessage(staleTargetsError));
+  }
+
+  if (additionalTargetIds.length > 0) {
+    const { error: additionalTargetsError } = await supabase.from("nutrient_interactions").upsert(
+      additionalTargetIds.map((targetId) => ({
+        source_nutrient_id: parsed.data.sourceNutrientId,
+        target_nutrient_id: targetId,
+        relation_type: parsed.data.relationType,
+        mechanism: parsed.data.mechanism,
+        description: resolveOptionalText(parsed.data.description),
+      })),
+      { onConflict: "source_nutrient_id,target_nutrient_id,mechanism" }
+    );
+
+    if (additionalTargetsError) {
+      return interactionError(getFriendlySupabaseErrorMessage(additionalTargetsError));
+    }
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/solo");
+  return interactionSuccess("Interação alterada com sucesso.");
+}
+
+export async function deleteNutrientInteractionAction(
+  _previousState: NutrientInteractionActionState,
+  formData: FormData
+): Promise<NutrientInteractionActionState> {
+  const parsedId = bigIntIdSchema.safeParse(formData.get("id"));
+
+  if (!parsedId.success) {
+    return interactionError("A interação selecionada é inválida.");
+  }
+
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("nutrient_interactions").delete().eq("id", parsedId.data);
+
+  if (error) {
+    return interactionError(getFriendlySupabaseErrorMessage(error));
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/solo");
+  return interactionSuccess("Interação excluída com sucesso.");
 }

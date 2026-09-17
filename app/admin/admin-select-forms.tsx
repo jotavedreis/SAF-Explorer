@@ -1,13 +1,16 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   createPhAvailabilityAction,
   createSpeciesFunctionAction,
   createSpeciesRelationAction,
   createVisualSymptomAction,
   deleteVisualSymptomAction,
+  deleteSpeciesRelationAction,
+  updateSpeciesRelationAction,
 } from "./actions";
+import { AdminModal } from "./admin-modal";
 
 // ---------------------------------------------------------------------------
 // Shared primitives (client-side copies, same styling as the server versions)
@@ -181,51 +184,145 @@ export function SpeciesFunctionForm({
 // ---------------------------------------------------------------------------
 
 export function SpeciesRelationForm({
+  relations,
   species,
   relationTypes,
 }: {
+  relations: SpeciesRelationRow[];
   species: SelectOption[];
   relationTypes: SelectOption[];
 }) {
   const [fromSpeciesId, setFromSpeciesId] = useState("");
   const [tipoRelacaoId, setTipoRelacaoId] = useState("");
   const [toSpeciesId, setToSpeciesId] = useState("");
+  const [editingRelation, setEditingRelation] = useState<SpeciesRelationRow | null>(null);
+  const [deletingRelation, setDeletingRelation] = useState<SpeciesRelationRow | null>(null);
+  const [editFromSpeciesId, setEditFromSpeciesId] = useState("");
+  const [editTipoRelacaoId, setEditTipoRelacaoId] = useState("");
+  const [editToSpeciesId, setEditToSpeciesId] = useState("");
+  const [feedback, setFeedback] = useState("");
   const [pending, startTransition] = useTransition();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     startTransition(async () => {
-      await createSpeciesRelationAction(fd);
+      const result = await createSpeciesRelationAction(fd);
+      setFeedback(result.message);
+    });
+  }
+
+  function handleUpdateSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await updateSpeciesRelationAction(fd);
+      setFeedback(result.message);
+      if (result.status === "success") {
+        setEditingRelation(null);
+      }
+    });
+  }
+
+  function handleDeleteSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await deleteSpeciesRelationAction(fd);
+      setFeedback(result.message);
+      if (result.status === "success") {
+        setDeletingRelation(null);
+      }
     });
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-3">
-      <PersistentSelect
-        label="Espécie origem"
-        name="fromSpeciesId"
-        options={species}
-        value={fromSpeciesId}
-        onChange={setFromSpeciesId}
-      />
-      <PersistentSelect
-        label="Tipo de relação"
-        name="tipoRelacaoId"
-        options={relationTypes}
-        value={tipoRelacaoId}
-        onChange={setTipoRelacaoId}
-      />
-      <PersistentSelect
-        label="Espécie destino"
-        name="toSpeciesId"
-        options={species}
-        value={toSpeciesId}
-        onChange={setToSpeciesId}
-      />
-      <SubmitButton label="Criar relação" pending={pending} />
-    </form>
+    <>
+      <form onSubmit={handleSubmit} className="grid gap-3">
+        <PersistentSelect label="Espécie origem" name="fromSpeciesId" options={species} value={fromSpeciesId} onChange={setFromSpeciesId} />
+        <PersistentSelect label="Tipo de relação" name="tipoRelacaoId" options={relationTypes} value={tipoRelacaoId} onChange={setTipoRelacaoId} />
+        <PersistentSelect label="Espécie destino" name="toSpeciesId" options={species} value={toSpeciesId} onChange={setToSpeciesId} />
+        <SubmitButton label="Criar relação" pending={pending} />
+      </form>
+
+      <div className="admin-manageable-list mt-4 border border-[#243528]/12 bg-[#f4f5eb]/72 p-3">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#758178]">Relações cadastradas</p>
+          <span className="admin-list-count bg-[#eef3e8] px-2 py-1 text-xs font-semibold text-[#263e2b]">{relations.length}</span>
+        </div>
+        {feedback ? <p className="mt-3 text-sm text-[#405046]" role="status">{feedback}</p> : null}
+        {relations.length === 0 ? <p className="mt-3 text-sm text-[#738076]">Nenhuma relação cadastrada.</p> : (
+          <div className="mt-3 grid gap-2">
+            {relations.map((relation) => (
+              <div key={relation.id} className="admin-list-item flex flex-col gap-2 border border-[#243528]/10 bg-[#eef3e8]/70 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm font-medium text-[#27382e]">{speciesLabel(species, relation.from_species_id)} <span className="text-[#738076]">{relationLabel(relationTypes, relation.tipo_relacao_id)}</span> {speciesLabel(species, relation.to_species_id)}</p>
+                <div className="flex shrink-0 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingRelation(relation);
+                      setEditFromSpeciesId(String(relation.from_species_id));
+                      setEditTipoRelacaoId(String(relation.tipo_relacao_id));
+                      setEditToSpeciesId(String(relation.to_species_id));
+                    }}
+                    className="admin-edit-button bg-[#e8f1dc] px-3 py-1 text-xs font-semibold text-[#4d651f]"
+                  >
+                    Editar
+                  </button>
+                  <button type="button" onClick={() => setDeletingRelation(relation)} className="admin-remove-button bg-[#f0d9d9] px-3 py-1 text-xs font-semibold text-[#7a2a2a]">Excluir</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {editingRelation ? (
+        <AdminModal title="Editar relação entre espécies" description="Altere a relação selecionada e salve a atualização." onClose={() => setEditingRelation(null)}>
+          <form onSubmit={handleUpdateSubmit} className="grid gap-3">
+            <input type="hidden" name="id" value={editingRelation.id} />
+            <PersistentSelect label="Espécie origem" name="fromSpeciesId" options={species} value={editFromSpeciesId} onChange={setEditFromSpeciesId} />
+            <PersistentSelect label="Tipo de relação" name="tipoRelacaoId" options={relationTypes} value={editTipoRelacaoId} onChange={setEditTipoRelacaoId} />
+            <PersistentSelect label="Espécie destino" name="toSpeciesId" options={species} value={editToSpeciesId} onChange={setEditToSpeciesId} />
+            <div className="admin-danger-actions">
+              <button type="submit" className="admin-danger-button">Salvar alteração</button>
+              <button type="button" onClick={() => setEditingRelation(null)} className="admin-secondary-button">Cancelar</button>
+            </div>
+          </form>
+        </AdminModal>
+      ) : null}
+
+      {deletingRelation ? (
+        <AdminModal title="Excluir relação entre espécies" description="Esta ação remove somente a relação selecionada." isDanger onClose={() => setDeletingRelation(null)}>
+          <div className="admin-danger-box">
+            <p className="font-semibold">Tem certeza de que deseja excluir esta relação?</p>
+            <p className="mt-1">As espécies envolvidas não serão removidas.</p>
+          </div>
+          <form onSubmit={handleDeleteSubmit} className="admin-danger-actions">
+            <input type="hidden" name="id" value={deletingRelation.id} />
+            <button type="submit" disabled={pending} className="admin-danger-button disabled:opacity-60">{pending ? "Excluindo..." : "Excluir"}</button>
+            <button type="button" onClick={() => setDeletingRelation(null)} className="admin-secondary-button">Cancelar</button>
+          </form>
+        </AdminModal>
+      ) : null}
+    </>
   );
+}
+
+type SpeciesRelationRow = {
+  id: number;
+  from_species_id: number;
+  to_species_id: number;
+  tipo_relacao_id: number;
+};
+
+function speciesLabel(species: SelectOption[], id: number) {
+  const item = species.find((option) => option.id === id);
+  return item?.nome_popular ?? item?.nome ?? `Espécie ${id}`;
+}
+
+function relationLabel(relationTypes: SelectOption[], id: number) {
+  return relationTypes.find((relation) => relation.id === id)?.nome ?? `Relação ${id}`;
 }
 
 // ---------------------------------------------------------------------------

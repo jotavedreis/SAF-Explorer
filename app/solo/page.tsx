@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { HeaderActionsMenu } from "../header-actions-menu";
 import { SoilDashboard } from "./soil-dashboard";
 
@@ -34,26 +35,49 @@ type VisualSymptomRow = {
   nutriente_id: number;
 };
 
+type NutrientInteractionRow = {
+  id: number;
+  source_nutrient_id: number;
+  target_nutrient_id: number;
+  relation_type: string;
+  mechanism: string;
+  description: string | null;
+  source_nutrient?: NutrientRow;
+  target_nutrient?: NutrientRow;
+};
+
 export default async function SoilPage() {
   const supabase = await createClient();
 
-  const [nutrientsResult, phPointsResult, availabilityResult, symptomsResult] = await Promise.all([
-    supabase
-      .from("nutriente")
-      .select("id, simbolo, nome, funcao_na_planta, sintomas_deficiencia, fontes_naturais")
-      .order("id", { ascending: true }),
-    supabase
-      .from("ph_ponto")
-      .select("id, ph_valor, descricao_acidez, atividade_biologica, presenca_aluminio")
-      .order("ph_valor", { ascending: true }),
-    supabase.from("ph_disponibilidade").select("ph_ponto_id, nutriente_id, disponibilidade_pct, descricao"),
-    supabase.from("sintoma_visual").select("id, descricao, nutriente_id").order("descricao", { ascending: true }),
-  ]);
+  const nutrientsResult = await supabase
+    .from("nutriente")
+    .select("id, simbolo, nome, funcao_na_planta, sintomas_deficiencia, fontes_naturais")
+    .order("id", { ascending: true });
+
+  const phPointsResult = await supabase
+    .from("ph_ponto")
+    .select("id, ph_valor, descricao_acidez, atividade_biologica, presenca_aluminio")
+    .order("ph_valor", { ascending: true });
+
+  const availabilityResult = await supabase.from("ph_disponibilidade").select("ph_ponto_id, nutriente_id, disponibilidade_pct, descricao");
+
+  const symptomsResult = await supabase.from("sintoma_visual").select("id, descricao, nutriente_id").order("descricao", { ascending: true });
+
+  const interactionsResult = await createAdminClient()
+    .from("nutrient_interactions")
+    .select("*")
+    .order("id", { ascending: true });
 
   const nutrients: NutrientRow[] = nutrientsResult.data ?? [];
   const phPoints: PhPointRow[] = phPointsResult.data ?? [];
   const availability: PhAvailabilityRow[] = availabilityResult.data ?? [];
   const symptoms: VisualSymptomRow[] = symptomsResult.data ?? [];
+  const nutrientMap = new Map(nutrients.map((nutrient) => [nutrient.id, nutrient]));
+  const interactions: NutrientInteractionRow[] = (interactionsResult.data ?? []).map((interaction) => ({
+    ...interaction,
+    source_nutrient: nutrientMap.get(interaction.source_nutrient_id),
+    target_nutrient: nutrientMap.get(interaction.target_nutrient_id),
+  }));
 
   return (
     <div className="catalog-page">
@@ -84,7 +108,7 @@ export default async function SoilPage() {
           </div>
         </header>
 
-        <SoilDashboard availability={availability} nutrients={nutrients} phPoints={phPoints} symptoms={symptoms} />
+        <SoilDashboard availability={availability} nutrients={nutrients} phPoints={phPoints} symptoms={symptoms} interactions={interactions} />
       </main>
     </div>
   );
