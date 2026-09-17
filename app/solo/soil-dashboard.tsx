@@ -188,6 +188,8 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
 
       <CTCCard />
 
+      <NutrientCycleCard />
+
       <section className="diagnosis-card p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
@@ -331,6 +333,124 @@ function CTCCard() {
               O aumento da matéria orgânica pode contribuir para elevar a capacidade de retenção e troca de cátions do solo. Práticas como adubação verde, manutenção de resíduos vegetais, cobertura do solo e uso adequado de compostos orgânicos favorecem a conservação e o aumento da matéria orgânica, especialmente em solos tropicais.
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const CYCLE_STEPS: { number: string; title: string; description: string; icon: string }[] = [
+  {
+    number: "1",
+    icon: "🌿",
+    title: "Aporte de Biomassa",
+    description: "Folhas, galhos, raízes e resíduos orgânicos depositam-se sobre o solo, servindo de alimento e proteção para a vida do solo.",
+  },
+  {
+    number: "2",
+    icon: "🐛",
+    title: "Decomposição",
+    description: "Insetos, minhocas e fungos fragmentam a matéria orgânica bruta, reduzindo seu tamanho e iniciando a quebra das moléculas complexas.",
+  },
+  {
+    number: "3",
+    icon: "🦠",
+    title: "Mineralização",
+    description: "As bactérias convertem nutrientes presentes na matéria orgânica em formas minerais, que podem passar para a solução do solo e ficar disponíveis para as plantas.",
+  },
+  {
+    number: "4",
+    icon: "⚗️",
+    title: "Nitrificação",
+    description: "Bactérias especializadas, incluindo grupos como Nitrosomonas e Nitrobacter, participam da transformação de compostos nitrogenados, levando à formação de nitrito e posteriormente nitrato.",
+  },
+  {
+    number: "5",
+    icon: "🌱",
+    title: "Absorção e Nova Biomassa",
+    description: "As raízes absorvem nutrientes presentes na solução do solo e os incorporam à planta, contribuindo para a formação de nova biomassa e a continuidade do ciclo.",
+  },
+];
+
+function NutrientCycleCard() {
+  return (
+    <section className="nutrient-cycle p-4 sm:p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-4 sm:mb-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--theme-ink)]">
+            Ciclagem de Nutrientes e Transformações Biológicas
+          </h2>
+          <p className="mt-2 text-base sm:text-lg text-[var(--theme-muted)]">
+            Como os microrganismos convertem a biomassa vegetal em nutrientes disponíveis para as raízes.
+          </p>
+        </div>
+
+        {/* Desktop: fluxo horizontal com setas entre cards */}
+        <div className="hidden md:flex items-stretch gap-0">
+          {CYCLE_STEPS.map((step, i) => (
+            <div key={step.number} className="flex items-stretch flex-1 min-w-0">
+              <div className="cycle-step h-full flex-1 flex flex-col items-center p-4 rounded-2xl border border-[var(--theme-line)]">
+                <div className="cycle-step-icon w-11 h-11 rounded-full flex items-center justify-center text-xl mb-3 flex-shrink-0">
+                  {step.icon}
+                </div>
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#3f5f18] text-white font-bold text-xs mb-3 flex-shrink-0">
+                  {step.number}
+                </span>
+                <h3 className="text-sm font-bold text-[var(--theme-ink)] mb-2 text-center leading-snug">{step.title}</h3>
+                <p className="text-xs leading-5 text-[var(--theme-muted)] text-center flex-1">{step.description}</p>
+              </div>
+              {i < CYCLE_STEPS.length - 1 && (
+                <div className="flex items-center flex-shrink-0">
+                  <svg
+                    aria-hidden="true"
+                    className="cycle-arrow mx-1"
+                    width="18" height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile: fluxo vertical com seta apontando para baixo */}
+        <div className="md:hidden flex flex-col gap-0">
+          {CYCLE_STEPS.map((step, i) => (
+            <div key={step.number} className="flex flex-col items-stretch">
+              <div className="cycle-step flex flex-row items-start gap-4 p-4 rounded-2xl border border-[var(--theme-line)]">
+                <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                  <div className="cycle-step-icon w-11 h-11 rounded-full flex items-center justify-center text-xl">
+                    {step.icon}
+                  </div>
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#3f5f18] text-white font-bold text-xs">
+                    {step.number}
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-base font-bold text-[var(--theme-ink)] mb-1 leading-snug">{step.title}</h3>
+                  <p className="text-sm leading-6 text-[var(--theme-muted)]">{step.description}</p>
+                </div>
+              </div>
+              {i < CYCLE_STEPS.length - 1 && (
+                <div className="flex justify-center py-1">
+                  <svg
+                    aria-hidden="true"
+                    className="cycle-arrow"
+                    width="18" height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M9 4v10M5 10l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

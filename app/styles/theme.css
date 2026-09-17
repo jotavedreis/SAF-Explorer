@@ -17,7 +17,7 @@
   --theme-panel: rgba(244, 245, 235, 0.9);
   --theme-panel-solid: #f4f5eb;
   --theme-panel-soft: rgba(238, 243, 232, 0.74);
-  --theme-line: rgba(36, 53, 40, 0.18);
+  --theme-line: rgba(36, 53, 40, 0.453);
   --theme-button: #12251a;
   --theme-button-hover: #223a2a;
   --theme-button-text: #f3f1e8;
@@ -184,7 +184,8 @@
 :root[data-theme="dark"] .soil-chip,
 :root[data-theme="dark"] .availability-card,
 :root[data-theme="dark"] .educational-column,
-:root[data-theme="dark"] .ctc-section {
+:root[data-theme="dark"] .ctc-section,
+:root[data-theme="dark"] .cycle-step {
   border-color: var(--theme-line) !important;
   background: rgba(255, 255, 255, 0.06) !important;
   color: var(--theme-ink) !important;
@@ -194,7 +195,8 @@
 :root[data-theme="dark"] .soil-chip :is(p, span),
 :root[data-theme="dark"] .availability-card :is(p),
 :root[data-theme="dark"] .educational-column :is(p, h3),
-:root[data-theme="dark"] .ctc-section :is(p, h3) {
+:root[data-theme="dark"] .ctc-section :is(p, h3),
+:root[data-theme="dark"] .cycle-step :is(p, h3) {
   color: var(--theme-ink) !important;
 }
 

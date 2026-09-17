@@ -391,4 +391,117 @@
   :root[data-theme="dark"] .ctc-section p {
     color: var(--theme-ink);
   }
+
+  .nutrient-cycle {
+    border-radius: 0;
+    border: 1px solid var(--theme-line);
+    background:
+      radial-gradient(circle at 14% 16%, rgba(93, 123, 31, 0.1), transparent 32%),
+      var(--theme-panel);
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
+  }
+
+  .cycle-step {
+    background: var(--theme-panel-soft);
+    border-color: var(--theme-line);
+  }
+
+  .cycle-step-icon {
+    background: color-mix(in srgb, var(--theme-kicker) 18%, var(--theme-panel-soft));
+  }
+
+  .cycle-arrow {
+    color: var(--theme-line);
+    opacity: 0.7;
+  }
+
+  @media (min-width: 640px) {
+    .soil-hero-card,
+    .nutrient-card,
+    .ph-stage,
+    .diagnosis-card,
+    .educational-banner,
+    .ctc-card {
+      border-radius: 1rem;
+    }
+
+    .nutrient-symbol {
+      height: 4.5rem;
+      width: 4.5rem;
+      border-radius: 0;
+      font-size: 1.7rem;
+    }
+
+    .diagnosis-result {
+      border-radius: 1.5rem;
+    }
+
+    .ph-gradient {
+      height: 1rem;
+    }
+
+    .ph-marker {
+      height: 2rem;
+      width: 2rem;
+      border-width: 4px;
+    }
+
+    .availability-card {
+      border-radius: 0;
+      padding: 1rem;
+    }
+
+    .availability-meter {
+      height: 0.7rem;
+    }
+
+    .condition-panel {
+      display: block;
+    }
+
+    .condition-line {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .educational-column {
+      border-radius: 1rem;
+    }
+
+    .ctc-card {
+      border-radius: 1rem;
+    }
+
+    .ctc-section {
+      border-radius: 1rem;
+    }
+
+    .nutrient-cycle {
+      border-radius: 1rem;
+    }
+
+    .cycle-step {
+      border-radius: 1rem;
+    }
+  }
+
+  :root[data-theme="dark"] .nutrient-cycle {
+    background:
+      radial-gradient(circle at 14% 16%, rgba(93, 123, 31, 0.18), transparent 32%),
+      var(--theme-panel);
+    border-color: var(--theme-line);
+  }
+
+  :root[data-theme="dark"] .cycle-step {
+    background: var(--theme-panel-soft);
+    border-color: var(--theme-line);
+  }
+
+  :root[data-theme="dark"] .cycle-step-icon {
+    background: color-mix(in srgb, var(--theme-kicker) 22%, rgba(255,255,255,0.06));
+  }
+
+  :root[data-theme="dark"] .cycle-arrow {
+    color: rgba(255, 255, 255, 0.3);
+  }
 }
