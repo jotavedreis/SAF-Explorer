@@ -186,6 +186,8 @@ export function SoilDashboard({ availability, nutrients, phPoints, symptoms }: S
         </div>
       </section>
 
+      <CTCCard />
+
       <section className="diagnosis-card p-4 sm:p-5">
         <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
@@ -268,6 +270,65 @@ function EducationalCard() {
             <h3 className="text-base sm:text-lg font-bold text-[#1f3127] mb-2">Na planta</h3>
             <p className="text-sm leading-6 text-[#22342a]">
               O nutriente disponível pode ser absorvido pelo sistema radicular e, posteriormente, transportado e utilizado pela planta.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTCCard() {
+  return (
+    <section className="ctc-card p-4 sm:p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-4 sm:mb-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#1f3127]">
+            Capacidade de Troca Catiônica (CTC)
+          </h2>
+          <p className="mt-2 text-base sm:text-lg text-[#657268]">
+            O reservatório de nutrientes do solo.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+          <div className="ctc-section theme-readable-surface bg-[#f8faf5] p-4 rounded-2xl border border-[#d4dcc8]">
+            <h3 className="text-lg font-bold text-[#1f3127] mb-3">
+              O que é a CTC?
+            </h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              É a capacidade do solo de reter e trocar íons de carga positiva, chamados cátions. A argila e a matéria orgânica possuem sítios de troca que podem reter nutrientes como Potássio (K⁺), Cálcio (Ca²⁺) e Magnésio (Mg²⁺), contribuindo para sua permanência no solo e reduzindo perdas por lixiviação (perda de nutrientes pela água).
+            </p>
+          </div>
+          <div className="ctc-section theme-readable-surface bg-[#f8faf5] p-4 rounded-2xl border border-[#d4dcc8]">
+            <h3 className="text-lg font-bold text-[#1f3127] mb-3">
+              O que influencia a CTC?
+            </h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              A CTC está relacionada principalmente à quantidade e ao tipo de argila, ao teor de matéria orgânica e, em alguns solos, ao pH. Solos com maior quantidade de argila de alta atividade e matéria orgânica tendem a apresentar maior capacidade de retenção e troca de cátions.
+            </p>
+          </div>
+          <div className="ctc-section theme-readable-surface bg-[#f8faf5] p-4 rounded-2xl border border-[#d4dcc8]">
+            <h3 className="text-lg font-bold text-[#1f3127] mb-3">
+              Qual a relação com a acidez?
+            </h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              Em solos muito ácidos, o aumento da presença de H⁺ e Al³⁺ nos sítios de troca altera o equilíbrio entre os cátions do solo. A acidez elevada também pode aumentar a presença de alumínio em formas tóxicas para as plantas, prejudicando o desenvolvimento das raízes e a absorção de nutrientes.
+            </p>
+          </div>
+          <div className="ctc-section theme-readable-surface bg-[#f8faf5] p-4 rounded-2xl border border-[#d4dcc8]">
+            <h3 className="text-lg font-bold text-[#1f3127] mb-3">
+              Por que isso é importante para as plantas?
+            </h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              Uma CTC mais elevada pode contribuir para a retenção de cátions nutrientes no solo e para sua disponibilidade às plantas. Porém, CTC alta não significa, por si só, que todos os nutrientes estarão disponíveis, pois a disponibilidade também depende de fatores como pH, umidade, forma química do nutriente e interações entre os elementos.
+            </p>
+          </div>
+          <div className="ctc-section theme-readable-surface bg-[#f8faf5] p-4 rounded-2xl border border-[#d4dcc8] md:col-span-2">
+            <h3 className="text-lg font-bold text-[#1f3127] mb-3">
+              Como aumentar a CTC?
+            </h3>
+            <p className="text-sm leading-6 text-[#22342a]">
+              O aumento da matéria orgânica pode contribuir para elevar a capacidade de retenção e troca de cátions do solo. Práticas como adubação verde, manutenção de resíduos vegetais, cobertura do solo e uso adequado de compostos orgânicos favorecem a conservação e o aumento da matéria orgânica, especialmente em solos tropicais.
             </p>
           </div>
         </div>
