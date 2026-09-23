@@ -559,6 +559,12 @@ select.theme-field {
   .species-modal-info {
     padding: 1.5rem;
   }
+
+  .species-modal-media {
+    position: sticky;
+    top: 1.5rem;
+    align-self: start;
+  }
 }
 
 :root[data-theme="dark"] .theme-badge {
