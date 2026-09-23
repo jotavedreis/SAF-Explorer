@@ -26,11 +26,10 @@ export const metadata: Metadata = {
   description: "Catálogo de espécies com navegação para clientes e área administrativa.",
   icons: {
     icon: [
-      { url: "/images/favicon_io/favicon.ico" },
-      { sizes: "16x16", type: "image/png", url: "/images/favicon_io/favicon-16x16.png" },
-      { sizes: "32x32", type: "image/png", url: "/images/favicon_io/favicon-32x32.png" },
+      { sizes: "32x32", type: "image/png", url: "/images/favicon_io/favicon-32x32.png?v=2" },
+      { sizes: "16x16", type: "image/png", url: "/images/favicon_io/favicon-16x16.png?v=2" },
     ],
-    apple: [{ sizes: "180x180", url: "/images/favicon_io/apple-touch-icon.png" }],
+    apple: [{ sizes: "180x180", url: "/images/favicon_io/apple-touch-icon.png?v=2" }],
   },
   manifest: "/images/favicon_io/site.webmanifest",
 };

@@ -27,6 +27,16 @@ const groupMembers = [
     email: "ricardo.macedo.ns@gmail.com",
     name: "Ricardo Macedo do Nascimento",
   },
+  {
+    affiliation: "Engenharia de Software, Universidade do Estado do Pará (UEPA)",
+    email: "j.fariasreis@aluno.uepa.br",
+    name: "João V. F. dos Reis",
+  },
+  {
+    affiliation: "Engenharia de Software, Universidade do Estado do Pará (UEPA)",
+    email: "jorgehermes@jhermesn.dev",
+    name: "Jorge Hermes",
+  },
 ];
 
 export default function Home() {
@@ -80,7 +90,7 @@ export default function Home() {
         >
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 px-10 py-3 font-semibold">
-              <img src="/images/icon.png" alt="Logo" className="h-6 w-6 object-contain" />
+              <img src="/images/icon.png" alt="Logo" className="h-8 w-8 object-contain" />
             </Link>
           <div className="hidden items-center text-right md:flex">
             <Link href="/especies" className={`border-l px-3 py-3 transition hover:bg-current/10 ${lineColor}`}>

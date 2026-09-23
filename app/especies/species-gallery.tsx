@@ -228,6 +228,7 @@ function SpeciesDetailModal({
   selectedSpecies: SpeciesRow;
   speciesMap: Map<number, SpeciesRow>;
 }) {
+  const [isImageOpen, setIsImageOpen] = useState(false);
   const selectedRelations = relations
     .map((relation) => {
       const relationType = relationTypeMap.get(relation.tipo_relacao_id);
@@ -266,11 +267,18 @@ function SpeciesDetailModal({
         <div className="species-modal-content">
           <div className="species-modal-media">
             {selectedSpecies.foto_url ? (
-              <img
-                src={selectedSpecies.foto_url}
-                alt={`Foto completa de ${selectedSpecies.nome_popular}`}
-                className="species-modal-image"
-              />
+              <button
+                type="button"
+                className="species-modal-image-button"
+                onClick={() => setIsImageOpen(true)}
+                aria-label={`Ver imagem completa de ${selectedSpecies.nome_popular}`}
+              >
+                <img
+                  src={selectedSpecies.foto_url}
+                  alt={`Foto de ${selectedSpecies.nome_popular}`}
+                  className="species-modal-image"
+                />
+              </button>
             ) : (
               <div className="species-modal-box species-modal-empty-image">Nenhuma foto cadastrada.</div>
             )}
@@ -367,6 +375,30 @@ function SpeciesDetailModal({
           </div>
         </div>
       </div>
+      {isImageOpen && selectedSpecies.foto_url ? (
+        <div
+          className="species-image-lightbox"
+          onClick={(event) => {
+            event.stopPropagation();
+            setIsImageOpen(false);
+          }}
+        >
+          <button
+            type="button"
+            className="species-image-lightbox-close"
+            onClick={() => setIsImageOpen(false)}
+            aria-label="Fechar imagem"
+          >
+            Fechar
+          </button>
+          <img
+            src={selectedSpecies.foto_url}
+            alt={`Imagem completa de ${selectedSpecies.nome_popular}`}
+            className="species-image-lightbox-image"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -423,6 +423,40 @@ select.theme-field {
   object-fit: cover;
 }
 
+.species-modal-image-button {
+  display: block;
+  width: 100%;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.species-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.88);
+  padding: 3.5rem 1rem 1rem;
+}
+
+.species-image-lightbox-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.species-image-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+}
+
 .species-modal-info {
   display: grid;
   gap: 1rem;
